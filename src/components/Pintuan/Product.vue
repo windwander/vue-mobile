@@ -28,7 +28,7 @@
     </div>
     <div class="invite-row">
       <flexbox>
-        <flexbox-item :span="2/5" class="vux-1px-r">
+        <flexbox-item :span="3/10" class="vux-1px-r">
           <div class="remain-people">
             还差
             <span class="number">1</span>
@@ -45,9 +45,51 @@
           <img class="avatar" src="../../../static/pintuan/avatar-default@2x.png" alt="用户头像" />
         </flexbox-item>
         <flexbox-item>
-          <x-button mini plain type="primary" class="btn" action-type="button" >直接参团</x-button>
+          <x-button mini plain type="primary" class="btn" action-type="button">直接参团</x-button>
         </flexbox-item>
       </flexbox>
+    </div>
+    <div class="direct-join-row">
+      <div class="order-title vux-1px-b">
+        <flexbox>
+          <flexbox-item :span="1/4" class="order-logo-box">
+            <img src="../../../static/pintuan/order-logo@2x.png" alt="商品图标" class="order-logo">
+          </flexbox-item>
+          <flexbox-item :span="3/4">
+            <div class="title-text">
+              <div class="product-text">
+                <span>{{carTypeName}}</span>
+                <span v-if="carInner" class="product-inner"> + 内饰清洗</span>
+              </div>
+              <div class="price">
+                单买价：
+                <span class="number">20.00</span>
+                元
+              </div>
+              <div class="price">
+                3人团价：
+                <span class="number">20.00</span>
+                元
+              </div>
+            </div>
+          </flexbox-item>
+        </flexbox>
+      </div>
+      <div class="group-info">
+        <div class="avatar-row">
+          <img class="avatar" src="../../../static/pintuan/avatar@2x.png" alt="用户头像" />
+          <img class="avatar" src="../../../static/pintuan/avatar-default@2x.png" alt="用户头像" />
+        </div>
+        <div class="remain-people">
+          还差
+          <span class="number">1</span>
+          人即可组团成功，
+          <clocker time="2017-09-21" format="%H : %M : %S">
+          </clocker>
+          后结束
+        </div>
+        <x-button type="primary" class="btn" action-type="button" >直接参团</x-button>
+      </div>
     </div>
     <div class="qr-row">
       <img class="img" src="../../../static/pintuan/qr-row@2x.png" alt="公众号二维码">
@@ -64,13 +106,13 @@
     <div class="bottombar-push"></div>
     <flexbox class="bottombar">
       <flexbox-item class="bottombar-item">
-        <a href="/" class="btn-my">
+        <a href="javascript:void(0);" class="btn-my" @click="loginDialog = true">
           <img slot="icon" src="../../../static/pintuan/my-icon@2x.png" class="my-icon"><br/>
           我的拼团
         </a>
       </flexbox-item>
       <flexbox-item class="bottombar-item">
-      <a href="/" class="btn-single">
+      <a href="javascript:void(0);" class="btn-single" @click="showOrderPopup = true">
         35元起<br/>单独购买
       </a>
       </flexbox-item>
@@ -137,6 +179,14 @@
         </div>
       </div>
     </popup>
+    <confirm v-model="loginDialog" title="登录" class="dialog-login">
+      <div slot="default" class="dialog-login-body">
+        <x-input name="mobile" title="手机号" placeholder="请输入手机号码" keyboard="number" is-type="china-mobile" @on-blur="onPhoneBlur"></x-input>
+        <x-input name="verifyCode" title="验证码" placeholder="请输入验证码" keyboard="number" :min="3" :max="5" @on-blur="onPhoneBlur">
+          <x-button slot="right" type="primary" mini>获取验证码</x-button>
+        </x-input>
+      </div>
+    </confirm>
   </div>
 </template>
 
@@ -153,7 +203,9 @@ import {
   XImg,
   Tabbar,
   TabbarItem,
-  Popup
+  Popup,
+  Confirm,
+  XInput
 } from 'vux'
 
 export default {
@@ -169,7 +221,9 @@ export default {
     XImg,
     Tabbar,
     TabbarItem,
-    Popup
+    Popup,
+    Confirm,
+    XInput
   },
   data () {
     return {
@@ -181,7 +235,8 @@ export default {
       city: 0,
       carType: 'car5',
       carTypeName: '五座小轿车',
-      carInner: false
+      carInner: false,
+      loginDialog: false
     }
   },
   methods: {
@@ -212,7 +267,8 @@ export default {
     },
     submit () {
       console.log('submit')
-    }
+    },
+    onPhoneBlur () {}
   },
   route: {
     data: function () {
@@ -282,6 +338,46 @@ export default {
   .btn {
     color: @theme-color;
     border-color: @theme-color;
+  }
+}
+.direct-join-row {
+  .order-title {
+    padding: 1em;
+    .order-logo-box {
+      align-self: flex-start;
+      padding-top: 0.375em;
+      .order-logo {
+        display: inline-block;
+        width: 100%;
+      }
+    }
+    .title-text {
+      display: inline-block;
+      .product-text {
+        font-size: 1.375rem;
+        font-weight: bold;
+      }
+      .price {
+        color: #666;
+      }
+    }
+  }
+  .group-info {
+    margin: 1em;
+    text-align: center;
+    .avatar {
+      width: 3em;
+      height: 3em;
+      margin-right: 2px;
+    }
+    .remain-people {
+      font-size: 0.875rem;
+      font-weight: bold;
+      line-height: 3;
+      .number {
+        color: @theme-color;
+      }
+    }
   }
 }
 .qr-row {
@@ -404,5 +500,8 @@ export default {
       line-height: 3;
     }
   }
+}
+.dialog-login-body {
+  margin: 0 -1.6em;
 }
 </style>

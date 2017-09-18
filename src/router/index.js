@@ -4,6 +4,8 @@ import setWechatTitle from '../utils/setWechatTitle.js'
 import Hello from '@/components/Hello'
 import PintuanProduct from '@/components/Pintuan/Product'
 import PintuanOrder from '@/components/Pintuan/Order'
+import PintuanList from '@/components/Pintuan/List'
+import PintuanMy from '@/components/Pintuan/My'
 
 Vue.use(Router)
 
@@ -29,6 +31,20 @@ var router = new Router({
       component: PintuanOrder,
       meta: {
         title: '确认订单'
+      }
+    }, {
+      path: '/pintuan/list',
+      name: 'PintuanList',
+      component: PintuanList,
+      meta: {
+        title: '全部拼团'
+      }
+    }, {
+      path: '/pintuan/my',
+      name: 'PintuanMy',
+      component: PintuanMy,
+      meta: {
+        title: '我的拼团'
       }
     }
   ]

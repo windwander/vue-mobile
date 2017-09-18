@@ -46,7 +46,7 @@
     </group>
     <group labelWidth="4em" labelAlign="left" gutter="0.5em">
       <x-input title="支付方式" disabled></x-input>
-      <cell title="微信支付">
+      <cell title="微信支付" class="pay-way">
         <img src="../../../static/pintuan/wechat-pay@2x.png" slot="icon" class="wechat-pay-icon" alt="微信支付图标">
         <x-icon type="ios-checkmark-empty" class="cell-icon-check"></x-icon>
       </cell>
@@ -135,6 +135,9 @@ export default {
   .wechat-pay-icon {
     width: 2em;
     margin-right: 1em;
+  }
+  .pay-way {
+    font-size: 0.875rem;
   }
   .cell-icon-check {
     width: 3em;
