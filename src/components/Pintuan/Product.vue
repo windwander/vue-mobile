@@ -103,6 +103,140 @@
       <video src="../../../static/product/carwash/1.mp4" controls preload="metadata" poster="../../../static/product/carwash/1.png" width="100%"></video>
       <x-img v-for="n in 11" :key="n" default-src="../../../static/placeholder.png" :src="'static/product/carwash/' + (n + 1) + '.png'" class="ximg" error-class="ximg-error" :offset="100" ></x-img>
     </div>
+    <ul v-if="tabIndex === 1" class="user-comment">
+      <li class="comment-row vux-1px-b">
+        <flexbox>
+          <flexbox-item :span="3/5">
+            <img class="avatar" src="../../../static/pintuan/review/group-16@2x.png" alt="用户头像" />
+            <div class="user-info">
+              <div class="user-phone">1***7</div>
+              <div class="comment-time">2017-09-13</div>
+            </div>
+          </flexbox-item>
+          <flexbox-item class="star-box">
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+          </flexbox-item>
+        </flexbox>
+        <p class="comment-content">非常干净，一直相信慧驾的服务</p>
+        <x-img default-src="static/product/placeholder.png" src="../../../static/pintuan/review/group-17@2x.png" class="ximg comment-img" error-class="ximg-error" :offset="100"></x-img>
+      </li>
+      <li class="comment-row vux-1px-b">
+        <flexbox>
+          <flexbox-item :span="3/5">
+            <img class="avatar" src="../../../static/pintuan/review/group-18@2x.png" alt="用户头像" />
+            <div class="user-info">
+              <div class="user-phone">1***7</div>
+              <div class="comment-time">2017-09-13</div>
+            </div>
+          </flexbox-item>
+          <flexbox-item class="star-box">
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+          </flexbox-item>
+        </flexbox>
+        <p class="comment-content">一早就预约好的，很快就洗好了，不错</p>
+        <x-img default-src="static/product/placeholder.png" src="../../../static/pintuan/review/group-19@2x.png" class="ximg comment-img" error-class="ximg-error" :offset="100"></x-img>
+      </li>
+      <li class="comment-row vux-1px-b">
+        <flexbox>
+          <flexbox-item :span="3/5">
+            <img class="avatar" src="../../../static/pintuan/review/group-20@2x.png" alt="用户头像" />
+            <div class="user-info">
+              <div class="user-phone">1***7</div>
+              <div class="comment-time">2017-09-13</div>
+            </div>
+          </flexbox-item>
+          <flexbox-item class="star-box">
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+          </flexbox-item>
+        </flexbox>
+        <p class="comment-content">服务非常好，还帮我修复了车身痕迹，赞一个。</p>
+        <x-img default-src="static/product/placeholder.png" src="../../../static/pintuan/review/group-21@2x.png" class="ximg comment-img" error-class="ximg-error" :offset="100"></x-img>
+      </li>
+      <li class="comment-row vux-1px-b">
+        <flexbox>
+          <flexbox-item :span="3/5">
+            <img class="avatar" src="../../../static/pintuan/review/group-22@2x.png" alt="用户头像" />
+            <div class="user-info">
+              <div class="user-phone">1***7</div>
+              <div class="comment-time">2017-09-13</div>
+            </div>
+          </flexbox-item>
+          <flexbox-item class="star-box">
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+          </flexbox-item>
+        </flexbox>
+        <p class="comment-content">车洗的很干净，态度很好，速度很快！</p>
+      </li>
+      <li class="comment-row vux-1px-b">
+        <flexbox>
+          <flexbox-item :span="3/5">
+            <img class="avatar" src="../../../static/pintuan/review/group-23@2x.png" alt="用户头像" />
+            <div class="user-info">
+              <div class="user-phone">1***7</div>
+              <div class="comment-time">2017-09-13</div>
+            </div>
+          </flexbox-item>
+          <flexbox-item class="star-box">
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+          </flexbox-item>
+        </flexbox>
+        <p class="comment-content">超赞，清洗很干净，最主要节约用水</p>
+        <x-img default-src="static/product/placeholder.png" src="../../../static/pintuan/review/group-24@2x.png" class="ximg comment-img" error-class="ximg-error" :offset="100"></x-img>
+      </li>
+      <li class="comment-row vux-1px-b">
+        <flexbox>
+          <flexbox-item :span="3/5">
+            <img class="avatar" src="../../../static/pintuan/review/group-25@2x.png" alt="用户头像" />
+            <div class="user-info">
+              <div class="user-phone">1***7</div>
+              <div class="comment-time">2017-09-13</div>
+            </div>
+          </flexbox-item>
+          <flexbox-item class="star-box">
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+          </flexbox-item>
+        </flexbox>
+        <p class="comment-content">洗的非常非常干净，下次还会用</p>
+      </li>
+    </ul>
+    <div v-if="tabIndex === 2" class="play-introduce">
+      <div class="play-ximg">
+        <x-img default-src="../../../static/pintuan/rule-top@2x.png" src="../../../static/pintuan/rule-top@2x.png" class="ximg" error-class="ximg-error" :offset="100"></x-img>
+      </div>
+      <div class="play-content">
+        <ol>
+          <li>此拼团活动新老客户均可参与，3人即可成团；</li>
+          <li>用户可加入其它客户一起拼团，也可自己单独开团；</li>
+          <li>若24小时内支付人数达到成团人数则拼团成功，自动发送计次卡至您的慧驾账户；否则团失败，自动退款至微信钱包；</li>
+          <li>拼团成功后，对应服务的计次卡将发放到您的账户中，您可以需要服务时，凭手机号登录慧驾微信公众号或者慧驾APP下单，服务完成选择计次卡支付。</li>
+        </ol>
+      </div>
+      <div class="play-copy">拼团活动解释权归南京联创慧驾汽车服务有限公司所有。</div>
+    </div>
     <div class="bottombar-push"></div>
     <flexbox class="bottombar">
       <flexbox-item class="bottombar-item">
@@ -179,11 +313,14 @@
         </div>
       </div>
     </popup>
-    <confirm v-model="loginDialog" title="登录" class="dialog-login">
+    <confirm v-model="loginDialog" title="登录" confirm-text="登录" class="dialog-login" @on-confirm="doLogin">
       <div slot="default" class="dialog-login-body">
-        <x-input name="mobile" title="手机号" placeholder="请输入手机号码" keyboard="number" is-type="china-mobile" @on-blur="onPhoneBlur"></x-input>
-        <x-input name="verifyCode" title="验证码" placeholder="请输入验证码" keyboard="number" :min="3" :max="5" @on-blur="onPhoneBlur">
-          <x-button slot="right" type="primary" mini>获取验证码</x-button>
+        <x-input name="mobile" title="手机号" placeholder="请输入手机号码" keyboard="number" v-model="phone" is-type="china-mobile" @on-blur="onPhoneBlur" ref="phone"></x-input>
+        <x-input name="graphCode" title="验证码" placeholder="请输入图形验证码" keyboard="number" v-model="graphCode" :min="4" :max="4" ref="graphCode">
+          <x-button slot="right" type="primary" class="graphcode" :style="{backgroundImage: 'url(' + graphCodeUrl + ')'}" title="刷新图形验证码" mini @click.native="getGraphCode">获取验证码</x-button>
+        </x-input>
+        <x-input name="verifyCode" title="短信验证码" placeholder="请输入短信验证码" keyboard="number" v-model="verifyCode" :min="3" :max="5">
+          <x-button slot="right" type="primary" mini @click.native="getSmsCode" :disabled="getSmsCodeShow">获取验证码</x-button>
         </x-input>
       </div>
     </confirm>
@@ -191,6 +328,7 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 import {
   Swiper,
   SwiperItem,
@@ -236,10 +374,27 @@ export default {
       carType: 'car5',
       carTypeName: '五座小轿车',
       carInner: false,
-      loginDialog: false
+      loginDialog: false,
+      phone: '',
+      graphCode: '',
+      verifyCode: '',
+      graphCodeUrl: '/api/v3/portal/outward/getGraphCode',
+      getSmsCodeShow: false
     }
   },
+  computed: {
+    ...mapState([])
+  },
+  watch: {
+    getSmsCodeShow: this.loginDialog && (this.$refs.phone.valid && this.$refs.graphCode.valid)
+  },
   methods: {
+    ...mapActions([
+      'sendSmsCode',
+      'validateSmsCode',
+      'getLoginTicket',
+      'loginRemote'
+    ]),
     onTabClick: function (index) {
       this.tabIndex = index
       console.log(index)
@@ -268,12 +423,21 @@ export default {
     submit () {
       console.log('submit')
     },
-    onPhoneBlur () {}
-  },
-  route: {
-    data: function () {
-      document.title = '页面标题'
+    onPhoneBlur () {},
+    getGraphCode () {
+      this.graphCodeUrl = '/api/v3/portal/outward/getGraphCode?time=' + Number(new Date())
+    },
+    getSmsCode () {
+      this.sendSmsCode({
+        phone: this.phone,
+        graphCode: this.graphCode
+      })
+    },
+    doLogin () {
     }
+  },
+  mounted () {
+    console.log(this)
   }
 }
 </script>
@@ -387,6 +551,70 @@ export default {
 }
 .ximg {
   width: 100%;
+}
+.user-comment {
+  padding: 1em 1.5em;
+  margin: 0;
+  .comment-row {
+    padding: 1em 0;
+    margin-bottom: 1em;
+    list-style: none;
+  }
+  .avatar {
+    width: 3.2em;
+    height: 3.2em;
+    float: left;
+  }
+  .user-info {
+    float: left;
+    margin: 0.3em 0 0 0.5em;
+    .user-phone {
+      font-size: 0.875rem;
+      font-weight: bold;
+      color: #58595b;
+    }
+    .comment-time {
+      font-size: 0.875rem;
+      color: @grey-text;
+    }
+  }
+  .star-box {
+    text-align: right;
+  }
+  .star {
+    width: 0.8em;
+    height: 0.8em;
+  }
+  .comment-content {
+    font-size: 0.875rem;
+    color: #000;
+    margin: 1em 0 1em;
+  }
+  .comment-img {
+    width: 7.5em;
+    height: 5.4em;
+  }
+}
+.play-introduce {
+  padding: 1em;
+  .play-ximg {
+    text-align: center;
+    .ximg {
+      width: 290px;
+    }
+  }
+  .play-content {
+    margin-top: 1em;
+    padding-left: 1.6em;
+    font-size: 0.875rem;
+    color: #333;
+  }
+  .play-copy {
+    font-size: 0.8rem;
+    color: @grey-text;
+    margin: 3.75rem 0 1.25rem;
+    text-align: center;
+  }
 }
 .bottombar-push {
   height: 4em;
@@ -503,5 +731,22 @@ export default {
 }
 .dialog-login-body {
   margin: 0 -1.6em;
+  line-height: 2;
+  .graphcode {
+    display: inline-block;
+    width: 5em;
+    height: 2em;
+    background-size: 10em;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 0;
+    color: transparent;
+    background-color: transparent;
+  }
+  .graphcode:active {
+    border-radius: 0;
+    color: transparent;
+    background-color: transparent;
+  }
 }
 </style>
