@@ -5,13 +5,10 @@ import FastClick from 'fastclick'
 import App from './App'
 import store from './store'
 import router from './router'
-import { WechatPlugin } from 'vux'
 
 FastClick.attach(document.body)
 
 Vue.config.productionTip = false
-
-Vue.use(WechatPlugin)
 
 /* eslint-disable no-new */
 new Vue({

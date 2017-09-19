@@ -313,14 +313,18 @@
         </div>
       </div>
     </popup>
-    <confirm v-model="loginDialog" title="登录" confirm-text="登录" class="dialog-login" @on-confirm="doLogin">
+    <confirm v-model="loginDialog" title="登录" :confirm-text="loginLoading ? '登陆中……' : '登录'" class="dialog-login" :close-on-confirm="false" @on-confirm="doLogin">
       <div slot="default" class="dialog-login-body">
-        <x-input name="mobile" title="手机号" placeholder="请输入手机号码" keyboard="number" v-model="phone" is-type="china-mobile" @on-blur="onPhoneBlur" ref="phone"></x-input>
-        <x-input name="graphCode" title="验证码" placeholder="请输入图形验证码" keyboard="number" v-model="graphCode" :min="4" :max="4" ref="graphCode">
-          <x-button slot="right" type="primary" class="graphcode" :style="{backgroundImage: 'url(' + graphCodeUrl + ')'}" title="刷新图形验证码" mini @click.native="getGraphCode">获取验证码</x-button>
+        <x-input name="mobile" title="" class="login-input" placeholder="请输入手机号码" keyboard="number" :show-clear="false" v-model="phone" is-type="china-mobile" @on-blur="onPhoneBlur" ref="phone"></x-input>
+        <x-input name="graphCode" title="" class="login-input" placeholder="请输入图形验证码" keyboard="number" :show-clear="false" v-model="graphCode" :min="4" :max="4" ref="graphCode">
+          <x-button slot="right" type="primary" class="graphcode" :style="{backgroundImage: 'url(' + graphCodeUrl + ')'}" title="刷新图形验证码" mini @click.native="getGraphCode">获取图形验证码</x-button>
         </x-input>
-        <x-input name="verifyCode" title="短信验证码" placeholder="请输入短信验证码" keyboard="number" v-model="verifyCode" :min="3" :max="5">
-          <x-button slot="right" type="primary" mini @click.native="getSmsCode" :disabled="getSmsCodeShow">获取验证码</x-button>
+        <x-input name="verifyCode" title="" class="login-input" placeholder="请输入短信验证码" keyboard="number" v-model="verifyCode" :show-clear="false" :min="4" :max="4" ref="verifyCode">
+          <x-button slot="right" type="primary" mini @click.native="getSmsCode" :disabled="disableGraphCode">
+            <countdown v-if="disableGraphCode" @on-finish="disableGraphCode = false" :value="60"></countdown>
+            <span v-if="disableGraphCode">秒</span>
+            <span v-if="!disableGraphCode">获取验证码</span>
+          </x-button>
         </x-input>
       </div>
     </confirm>
@@ -328,7 +332,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapMutations, mapActions, mapState } from 'vuex'
 import {
   Swiper,
   SwiperItem,
@@ -343,7 +347,8 @@ import {
   TabbarItem,
   Popup,
   Confirm,
-  XInput
+  XInput,
+  Countdown
 } from 'vux'
 
 export default {
@@ -361,7 +366,8 @@ export default {
     TabbarItem,
     Popup,
     Confirm,
-    XInput
+    XInput,
+    Countdown
   },
   data () {
     return {
@@ -375,25 +381,26 @@ export default {
       carTypeName: '五座小轿车',
       carInner: false,
       loginDialog: false,
+      loginLoading: false,
       phone: '',
       graphCode: '',
       verifyCode: '',
       graphCodeUrl: '/api/v3/portal/outward/getGraphCode',
-      getSmsCodeShow: false
+      disableGraphCode: false
     }
   },
   computed: {
     ...mapState([])
   },
-  watch: {
-    getSmsCodeShow: this.loginDialog && (this.$refs.phone.valid && this.$refs.graphCode.valid)
-  },
   methods: {
+    ...mapMutations([
+      'showToast',
+      'showLoading',
+      'hideLoading'
+    ]),
     ...mapActions([
       'sendSmsCode',
-      'validateSmsCode',
-      'getLoginTicket',
-      'loginRemote'
+      'smsLogin'
     ]),
     onTabClick: function (index) {
       this.tabIndex = index
@@ -428,12 +435,67 @@ export default {
       this.graphCodeUrl = '/api/v3/portal/outward/getGraphCode?time=' + Number(new Date())
     },
     getSmsCode () {
-      this.sendSmsCode({
-        phone: this.phone,
-        graphCode: this.graphCode
-      })
+      const z = this
+      if (!(z.phone && z.$refs.phone.valid)) {
+        z.showToast({
+          type: 'warn',
+          text: '请输入正确的手机号'
+        })
+      } else if (!(z.graphCode && z.$refs.graphCode.valid)) {
+        z.showToast({
+          type: 'warn',
+          text: '请输入图形验证码'
+        })
+      } else {
+        z.sendSmsCode({
+          phone: z.phone,
+          graphCode: z.graphCode
+        }).then(function (status) {
+          z.showToast({
+            type: 'success',
+            text: '短信验证码已发送'
+          })
+          if (status === 200) {
+            z.disableGraphCode = true
+          }
+        })
+      }
     },
     doLogin () {
+      const z = this
+      if (!(z.phone && z.$refs.phone.valid)) {
+        z.showToast({
+          type: 'warn',
+          text: '请输入正确的手机号'
+        })
+      } else if (!(z.graphCode && z.$refs.graphCode.valid)) {
+        z.showToast({
+          type: 'warn',
+          text: '请输入图形验证码'
+        })
+      } else if (!(z.verifyCode && z.$refs.verifyCode.valid)) {
+        z.showToast({
+          type: 'warn',
+          text: '请输入短信验证码'
+        })
+      } else if (!z.loginLoading) {
+        let data = {
+          phone: z.phone,
+          verificationCode: z.verifyCode
+        }
+        z.showLoading({
+          text: '登陆中……'
+        })
+        z.loginLoading = true
+        z.smsLogin(data).then(function (status) {
+          z.hideLoading()
+          if (status === 200) {
+            z.loginDialog = false
+            z.loginLoading = false
+            z.$router.push('/pintuan/my')
+          }
+        })
+      }
     }
   },
   mounted () {
@@ -732,6 +794,14 @@ export default {
 .dialog-login-body {
   margin: 0 -1.6em;
   line-height: 2;
+  .login-input {
+    background-color: #f0f0f0;
+    border-radius: 0.5em;
+    margin: 0 1em 0.5em;
+  }
+  .login-input::before {
+    border: 0;
+  }
   .graphcode {
     display: inline-block;
     width: 5em;

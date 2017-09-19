@@ -77,6 +77,7 @@
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex'
 import {
   Tab,
   TabItem,
@@ -96,6 +97,14 @@ export default {
   },
   data () {
     return {}
+  },
+  methods: {
+    ...mapActions([
+      'getPintuanAllGroup'
+    ])
+  },
+  mounted () {
+    this.getPintuanAllGroup()
   }
 }
 </script>
