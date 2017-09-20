@@ -101,6 +101,7 @@ export default {
   },
   data () {
     return {
+      orderInfo: {},
       openId: '',
       appId: '',
       ticket: '',
@@ -115,7 +116,7 @@ export default {
   },
   computed: {
     ...mapState([
-      'orderInfo'
+      // 'orderInfo'
     ])
   },
   methods: {
@@ -201,7 +202,8 @@ export default {
     createOrder () {
       const z = this
       z.orderPintuan({
-        productId: z.orderInfo.categoryId.toString(),
+        productId: '',
+        productCatalog: z.orderInfo.categoryId.toString(),
         saleAmonut: z.orderInfo.salePrice * 100,
         introducerId: '',
         actEntityId: '',
@@ -265,7 +267,7 @@ export default {
         let isMicroMessenger = navigator.userAgent.toLowerCase().indexOf('MicroMessenger'.toLowerCase()) > -1
         if (isMicroMessenger && !querystring.parse().code) {
           let redirUri = encodeURIComponent(window.location.href)
-          window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + z.appId + '&redirect_uri=' + redirUri + '&&response_type=code&scope=snsapi_base&state=1#wechat_redirect'
+          window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + z.appId + '&redirect_uri=' + redirUri + '&response_type=code&scope=snsapi_base&state=1#wechat_redirect'
         } else {
           z.initWxConfig()
         }
@@ -300,11 +302,14 @@ export default {
   },
   created () {
     const z = this
-    // if (!z.orderInfo.cityCode) {
-    //   z.$router.push({
-    //     name: 'PintuanProduct'
-    //   })
-    // }
+    let pintuanOrderInfo = sessionStorage.getItem('pintuanOrderInfo')
+    if (pintuanOrderInfo) {
+      z.orderInfo = JSON.parse(pintuanOrderInfo)
+    } else {
+      // z.$router.push({
+      //   name: 'PintuanProduct'
+      // })
+    }
     z.isLogin().then(function (status) {
       z.isUserLogin = status
     })

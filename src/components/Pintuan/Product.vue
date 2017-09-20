@@ -504,7 +504,9 @@ export default {
           text: '请选择城市'
         })
       } else {
-        this.setOrderInfo(Object.assign({}, this.orderInfo, this.city))
+        let allOrderInfo = Object.assign({}, this.orderInfo, this.city)
+        sessionStorage.setItem('pintuanOrderInfo', JSON.stringify(allOrderInfo))
+        this.setOrderInfo()
         this.$router.push({
           name: 'PintuanOrder'
         })

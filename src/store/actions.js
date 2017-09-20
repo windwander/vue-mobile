@@ -162,6 +162,7 @@ export const actions = {
    * POST /v/groupBuyingOrder
    * 拼多多下单
    * @param productId
+   * @param productCatalog
    * @param saleAmonut
    * @param introducerId
    * @param actEntityId
