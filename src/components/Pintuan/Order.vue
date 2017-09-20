@@ -3,7 +3,7 @@
     <div class="order-title">
       <flexbox>
         <flexbox-item :span="1/4" class="order-logo-box">
-          <img src="../../../static/pintuan/order-logo@2x.png" alt="商品图标" class="order-logo">
+          <img src="~static/pintuan/order-logo@2x.png" alt="商品图标" class="order-logo">
         </flexbox-item>
         <flexbox-item :span="3/4">
           <div class="title-text">
@@ -53,7 +53,7 @@
     <group labelWidth="4em" labelAlign="left" gutter="0.5em">
       <x-input title="支付方式" disabled></x-input>
       <cell title="微信支付" class="pay-way">
-        <img src="../../../static/pintuan/wechat-pay@2x.png" slot="icon" class="wechat-pay-icon" alt="微信支付图标">
+        <img src="~static/pintuan/wechat-pay@2x.png" slot="icon" class="wechat-pay-icon" alt="微信支付图标">
         <x-icon type="ios-checkmark-empty" class="cell-icon-check"></x-icon>
       </cell>
     </group>
@@ -227,15 +227,19 @@ export default {
         paySourceEnum: '6'
       }
       z.h5pay(payData).then(function (obj) {
+        console.log(obj)
         z.$wechat.chooseWXPay({
           timestamp: obj.weiXinPayOutputDTO.timeStamp,
           nonceStr: obj.weiXinPayOutputDTO.nonceStr,
           package: obj.weiXinPayOutputDTO.wxPackage,
-          signType: 'MD5',
+          signType: obj.weiXinPayOutputDTO.signType,
           paySign: obj.weiXinPayOutputDTO.paySign,
           success: function (res) {
             // 支付成功
             console.log(res)
+            this.$router.push({
+              name: 'PintuanProduct'
+            })
           }
         })
       })
