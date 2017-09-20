@@ -86,7 +86,8 @@ import {
   Cell,
   XInput,
   XButton,
-  Countdown
+  Countdown,
+  querystring
 } from 'vux'
 export default {
   components: {
@@ -101,6 +102,8 @@ export default {
   data () {
     return {
       openId: '',
+      appId: '',
+      ticket: '',
       payLoading: false,
       phone: '',
       graphCode: '',
@@ -253,31 +256,44 @@ export default {
       }
       return pwd
     },
-    initWxConfig () {
+    initWxTicket () {
       const z = this
       z.getWxTicket().then(function (t) {
+        z.appId = t.appid
+        z.ticket = t.ticket
+        console.dir(querystring.parse())
+        let isMicroMessenger = navigator.userAgent.toLowerCase().indexOf('MicroMessenger'.toLowerCase()) > -1
+        if (isMicroMessenger && !querystring.parse().code) {
+          let redirUri = encodeURIComponent(window.location.href)
+          window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + z.appId + '&redirect_uri=' + redirUri + '&&response_type=code&scope=snsapi_base&state=1#wechat_redirect'
+        } else {
+          z.initWxConfig()
+        }
         console.log(t)
-        let noncestr = z.randomStr(16)
-        let timestamp = new Date().getTime().toString().substr(0, 10)
-        let url = decodeURIComponent(location.href).split('#')[0]
-        let signStr = 'jsapi_ticket=' + t.ticket + '&noncestr=' + noncestr + '&timestamp=' + timestamp + '&url=' + url
-        let signature = sha1(signStr).toString()
-        z.$wechat.config({
-          debug: true, // 开发者工具显示详情
-          appId: t.appid,
-          timestamp: timestamp,
-          nonceStr: noncestr,
-          signature: signature,
-          jsApiList: [
-            'chooseWXPay'
-          ]
-        })
-        z.$wechat.error(function (res) {
-          console.log(res)
-          z.showToast({
-            type: 'warn',
-            text: '微信权限验证配置失败'
-          })
+      })
+    },
+    initWxConfig () {
+      const z = this
+      let noncestr = z.randomStr(16)
+      let timestamp = new Date().getTime().toString().substr(0, 10)
+      let url = decodeURIComponent(location.href).split('#')[0]
+      let signStr = 'jsapi_ticket=' + z.ticket + '&noncestr=' + noncestr + '&timestamp=' + timestamp + '&url=' + url
+      let signature = sha1(signStr).toString()
+      z.$wechat.config({
+        debug: true, // 开发者工具显示详情
+        appId: z.appId,
+        timestamp: timestamp,
+        nonceStr: noncestr,
+        signature: signature,
+        jsApiList: [
+          'chooseWXPay'
+        ]
+      })
+      z.$wechat.error(function (res) {
+        console.log(res)
+        z.showToast({
+          type: 'warn',
+          text: '微信权限验证配置失败'
         })
       })
     }
@@ -296,10 +312,13 @@ export default {
   mounted () {
     const z = this
     console.log(this.orderInfo)
-    z.initWxConfig()
-    z.getWxOpenId().then(function (openId) {
-      z.openId = openId
-    })
+    z.initWxTicket()
+    let code = querystring.parse().code
+    if (code) {
+      z.getWxOpenId().then(function (openId) {
+        z.openId = openId
+      })
+    }
   }
 }
 </script>
