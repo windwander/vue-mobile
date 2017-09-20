@@ -276,6 +276,9 @@ export default {
           z.initWxConfig()
         }
         console.log(t)
+      }).catch(function () {
+        // 清除失效的微信code
+        location.search = ''
       })
     },
     initWxConfig () {

@@ -10,7 +10,8 @@ export const state = {
     text: ''
   },
   pintuanProduct: {},
-  orderInfo: {}
+  // orderInfo: {},
+  pintuanAllGroup: {}
 }
 
 export const mutations = {

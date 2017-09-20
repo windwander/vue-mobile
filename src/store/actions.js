@@ -50,6 +50,7 @@ export const actions = {
         params: data
       }).then(res => {
         console.log(res.data)
+        state.pintuanAllGroup = res.data
         resolve()
       }).catch(error => {
         oneError(commit, state, error, '查询所有的拼团信息')
@@ -70,7 +71,7 @@ export const actions = {
         params: data
       }).then(res => {
         console.log(res.data)
-        resolve()
+        resolve(res.data)
       }).catch(error => {
         oneError(commit, state, error, '查询拼团实体数据')
         reject(error)
@@ -131,7 +132,7 @@ export const actions = {
         params: data
       }).then(res => {
         console.log(res.data)
-        resolve()
+        resolve(res.data)
       }).catch(error => {
         oneError(commit, state, error, '查询我的拼团信息')
         reject(error)

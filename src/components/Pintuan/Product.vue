@@ -22,35 +22,34 @@
           份
         </span> -->
       </div>
-      <div class="pintuan-all">
+      <div v-if="actEntityId" class="pintuan-all">
         <span>想买了？可直接参与下面的团</span>
         <a href="#" class="link">全部拼团></a>
       </div>
     </div>
-    <div class="invite-row">
+    <div v-if="actEntityId" class="invite-row">
       <flexbox>
         <flexbox-item :span="3/10" class="vux-1px-r">
           <div class="remain-people">
             还差
-            <span class="number">1</span>
+            <span class="number">{{ group.groupRequireMember - group.groupNowMember }}</span>
             人
           </div>
           <div class="countdown">
             剩余：
-            <clocker time="2017-09-21" format="%H : %M : %S">
+            <clocker :time="formatDate(new Date(new Date(group.startDateTime).getTime() + (group.entityTimeOut * 60 * 60 * 1000)))" format="%H : %M : %S">
             </clocker>
           </div>
         </flexbox-item>
         <flexbox-item>
-          <img class="avatar" src="~static/pintuan/avatar@2x.png" alt="用户头像" />
-          <img class="avatar" src="~static/pintuan/avatar-default@2x.png" alt="用户头像" />
+          <img class="avatar" v-for="(url, index) in group.picturl" :key="index" :src="url || '~static/pintuan/avatar-default@2x.png'" alt="用户头像'" />
         </flexbox-item>
         <flexbox-item>
-          <x-button mini plain type="primary" class="btn" action-type="button">直接参团</x-button>
+          <x-button mini plain type="primary" class="btn" action-type="button" @click.native="clickJoin(group)">直接参团</x-button>
         </flexbox-item>
       </flexbox>
     </div>
-    <div class="direct-join-row">
+    <!-- <div class="direct-join-row">
       <div class="order-title vux-1px-b">
         <flexbox>
           <flexbox-item :span="1/4" class="order-logo-box">
@@ -90,7 +89,7 @@
         </div>
         <x-button type="primary" class="btn" action-type="button" >直接参团</x-button>
       </div>
-    </div>
+    </div> -->
     <div class="qr-row">
       <img class="img" src="~static/pintuan/qr-row@2x.png" alt="公众号二维码">
     </div>
@@ -345,7 +344,8 @@ import {
   Popup,
   Confirm,
   XInput,
-  Countdown
+  Countdown,
+  dateFormat
 } from 'vux'
 
 export default {
@@ -395,7 +395,9 @@ export default {
       graphCode: '',
       verifyCode: '',
       graphCodeUrl: '/api/v3/portal/outward/getGraphCode',
-      disableGraphCode: false
+      disableGraphCode: false,
+      actEntityId: '',
+      group: {}
     }
   },
   computed: {
@@ -431,7 +433,8 @@ export default {
     ...mapActions([
       'sendSmsCode',
       'smsLogin',
-      'getPintuanProduct'
+      'getPintuanProduct',
+      'getPintuanDetails'
     ]),
     onTabClick: function (index) {
       this.tabIndex = index
@@ -504,11 +507,12 @@ export default {
           text: '请选择城市'
         })
       } else {
-        let allOrderInfo = Object.assign({}, this.orderInfo, this.city)
+        let allOrderInfo = Object.assign({}, z.orderInfo, z.city)
         sessionStorage.setItem('pintuanOrderInfo', JSON.stringify(allOrderInfo))
-        this.setOrderInfo()
-        this.$router.push({
-          name: 'PintuanOrder'
+        z.setOrderInfo()
+        z.$router.push({
+          name: 'PintuanOrder',
+          query: z.$router.query
         })
       }
       console.log('submit')
@@ -580,12 +584,35 @@ export default {
           }
         })
       }
+    },
+    clickJoin (group) {
+      // this.$router.push({
+      //   name: 'PintuanProduct',
+      //   query: {
+      //     actEntityId: group.actEntityId
+      //   }
+      // })
+      this.clickOrderPopupButton(true)
+      console.log(group)
+    },
+    formatDate (time) {
+      return dateFormat(time, 'YYYY-MM-DD')
     }
   },
   created () {
-    this.getPintuanProduct({
+    const z = this
+    z.actEntityId = z.$route.query && z.$route.query.actEntityId
+    console.log(z.actEntityId)
+    z.getPintuanProduct({
       activityId: 1
     })
+    if (z.actEntityId) {
+      z.getPintuanDetails({
+        actEntityId: z.actEntityId
+      }).then(function (group) {
+        z.group = group
+      })
+    }
   },
   mounted () {
     console.log(this)
@@ -649,6 +676,7 @@ export default {
     width: 3em;
     height: 3em;
     margin-right: 2px;
+    border-radius: 1.5em;
   }
   .btn {
     color: @theme-color;
@@ -684,6 +712,7 @@ export default {
       width: 3em;
       height: 3em;
       margin-right: 2px;
+      border-radius: 1.5em;
     }
     .remain-people {
       font-size: 0.875rem;
