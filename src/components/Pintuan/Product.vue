@@ -12,14 +12,15 @@
       </div>
       <div class="price-row">
         <span class="price-low">
-          &#165;
-          <span class="number">20.00</span>
+          <!-- &#165; -->
+          <span class="number">{{ discountLowPrice }}</span>
+          元起
         </span>
-        <span class="sale-amount">
+        <!-- <span class="sale-amount">
           已售
           <span class="number">1000</span>
           份
-        </span>
+        </span> -->
       </div>
       <div class="pintuan-all">
         <span>想买了？可直接参与下面的团</span>
@@ -58,8 +59,7 @@
           <flexbox-item :span="3/4">
             <div class="title-text">
               <div class="product-text">
-                <span>{{carTypeName}}</span>
-                <span v-if="carInner" class="product-inner"> + 内饰清洗</span>
+                <span>{{ orderInfo.title }}</span>
               </div>
               <div class="price">
                 单买价：
@@ -122,7 +122,7 @@
           </flexbox-item>
         </flexbox>
         <p class="comment-content">非常干净，一直相信慧驾的服务</p>
-        <x-img default-src="static/product/placeholder.png" src="../../../static/pintuan/review/group-17@2x.png" class="ximg comment-img" error-class="ximg-error" :offset="100"></x-img>
+        <x-img default-src="../../../static/placeholder.png" src="../../../static/pintuan/review/group-17@2x.png" class="ximg comment-img" error-class="ximg-error" :offset="100"></x-img>
       </li>
       <li class="comment-row vux-1px-b">
         <flexbox>
@@ -142,7 +142,7 @@
           </flexbox-item>
         </flexbox>
         <p class="comment-content">一早就预约好的，很快就洗好了，不错</p>
-        <x-img default-src="static/product/placeholder.png" src="../../../static/pintuan/review/group-19@2x.png" class="ximg comment-img" error-class="ximg-error" :offset="100"></x-img>
+        <x-img default-src="../../../static/placeholder.png" src="../../../static/pintuan/review/group-19@2x.png" class="ximg comment-img" error-class="ximg-error" :offset="100"></x-img>
       </li>
       <li class="comment-row vux-1px-b">
         <flexbox>
@@ -162,7 +162,7 @@
           </flexbox-item>
         </flexbox>
         <p class="comment-content">服务非常好，还帮我修复了车身痕迹，赞一个。</p>
-        <x-img default-src="static/product/placeholder.png" src="../../../static/pintuan/review/group-21@2x.png" class="ximg comment-img" error-class="ximg-error" :offset="100"></x-img>
+        <x-img default-src="../../../static/placeholder.png" src="../../../static/pintuan/review/group-21@2x.png" class="ximg comment-img" error-class="ximg-error" :offset="100"></x-img>
       </li>
       <li class="comment-row vux-1px-b">
         <flexbox>
@@ -201,7 +201,7 @@
           </flexbox-item>
         </flexbox>
         <p class="comment-content">超赞，清洗很干净，最主要节约用水</p>
-        <x-img default-src="static/product/placeholder.png" src="../../../static/pintuan/review/group-24@2x.png" class="ximg comment-img" error-class="ximg-error" :offset="100"></x-img>
+        <x-img default-src="../../../static/placeholder.png" src="../../../static/pintuan/review/group-24@2x.png" class="ximg comment-img" error-class="ximg-error" :offset="100"></x-img>
       </li>
       <li class="comment-row vux-1px-b">
         <flexbox>
@@ -246,13 +246,13 @@
         </a>
       </flexbox-item>
       <flexbox-item class="bottombar-item">
-      <a href="javascript:void(0);" class="btn-single" @click="showOrderPopup = true">
-        35元起<br/>单独购买
+      <a href="javascript:void(0);" class="btn-single" @click="clickOrderPopupButton(false)">
+        {{ saleLowPrice }}元起<br/>单独购买
       </a>
       </flexbox-item>
       <flexbox-item class="bottombar-item">
-        <a href="javascript:void(0);" class="btn-pintuan" @click="showOrderPopup = true">
-          20元起<br/>3人拼团
+        <a href="javascript:void(0);" class="btn-pintuan" @click="clickOrderPopupButton(true)">
+          {{ discountLowPrice }}元起<br/>3人拼团
         </a>
       </flexbox-item>
     </flexbox>
@@ -263,12 +263,11 @@
           <div class="title-text">
             <span class="price">
               &#165;
-              <span class="number">20.00</span>
+              <span class="number">{{ orderInfo.orderPrice }}</span>
             </span>
             <br/>
             <span class="product-text">
-              <span>{{carTypeName}}</span>
-              <span v-if="carInner" class="product-inner"> + 内饰清洗</span>
+              <span>{{ orderInfo.title }}</span>
             </span>
           </div>
         </div>
@@ -276,9 +275,7 @@
           选择城市
         </div>
         <div class="row-pad vux-1px-b">
-          <x-button mini plain class="btn" action-type="button" :class="{selected: city === 320100}" @click.native="setCity(320100)">南京</x-button>
-          <x-button mini plain class="btn" action-type="button"  :class="{selected: city === 320200}" @click.native="setCity(320200)">苏州</x-button>
-          <x-button mini plain class="btn" action-type="button"  :class="{selected: city === 320300}" @click.native="setCity(320300)">淮安</x-button>
+          <x-button v-for="c in cities" :key="c.cityCode" mini plain class="btn" action-type="button" :class="{selected: city.cityCode === c.cityCode}" @click.native="setCity(c)">{{ c.cityName }}</x-button>
         </div>
         <div class="row-pad vux-1px-b">
           选择车型
@@ -286,17 +283,17 @@
         <div class="car-type vux-1px-b">
           <flexbox>
             <flexbox-item>
-              <div class="car-btn car5" :class="{selected: carType === 'car5'}" @click="setCarType('car5')">
+              <div class="car-btn car5" :class="{selected: carType === '五座轿车'}" @click="setCarType('五座轿车')">
                 五座小轿车
               </div>
             </flexbox-item>
             <flexbox-item class="vux-1px-l vux-1px-r margin-0">
-              <div class="car-btn suv5" :class="{selected: carType === 'suv5'}" @click="setCarType('suv5')">
+              <div class="car-btn suv5" :class="{selected: carType === '五座SUV'}" @click="setCarType('五座SUV')">
                 五座SUV
               </div>
             </flexbox-item>
             <flexbox-item class=" margin-0">
-              <div class="car-btn suv7" :class="{selected: carType === 'suv7'}" @click="setCarType('suv7')">
+              <div class="car-btn suv7" :class="{selected: carType === '七座商务'}" @click="setCarType('七座商务')">
                 七座商务SUV
               </div>
             </flexbox-item>
@@ -315,7 +312,7 @@
     </popup>
     <confirm v-model="loginDialog" title="登录" :confirm-text="loginLoading ? '登陆中……' : '登录'" class="dialog-login" :close-on-confirm="false" @on-confirm="doLogin">
       <div slot="default" class="dialog-login-body">
-        <x-input name="mobile" title="" class="login-input" placeholder="请输入手机号码" keyboard="number" :show-clear="false" v-model="phone" is-type="china-mobile" @on-blur="onPhoneBlur" ref="phone"></x-input>
+        <x-input name="mobile" title="" class="login-input" placeholder="请输入手机号码" keyboard="number" :show-clear="false" v-model="phone" is-type="china-mobile" ref="phone"></x-input>
         <x-input name="graphCode" title="" class="login-input" placeholder="请输入图形验证码" keyboard="number" :show-clear="false" v-model="graphCode" :min="4" :max="4" ref="graphCode">
           <x-button slot="right" type="primary" class="graphcode" :style="{backgroundImage: 'url(' + graphCodeUrl + ')'}" title="刷新图形验证码" mini @click.native="getGraphCode">获取图形验证码</x-button>
         </x-input>
@@ -376,10 +373,22 @@ export default {
       ],
       tabIndex: 0,
       showOrderPopup: false,
-      city: 0,
-      carType: 'car5',
-      carTypeName: '五座小轿车',
+      city: {
+        cityCode: 0,
+        cityName: ''
+      },
+      carType: '五座轿车',
+      // carTypeNames: ['五座SUV', '五座轿车', '七座商务'],
       carInner: false,
+      buyDiscount: false,
+      orderPrice: '',
+      orderInfo: {
+        title: '五座轿车',
+        categoryId: [],
+        orderPrice: 0,
+        dicountPrice: 0,
+        salePrice: 0
+      },
       loginDialog: false,
       loginLoading: false,
       phone: '',
@@ -390,17 +399,39 @@ export default {
     }
   },
   computed: {
-    ...mapState([])
+    ...mapState([
+      'pintuanProduct'
+    ]),
+    saleLowPrice: function () {
+      return this.pintuanProduct.saleLowPrice && (this.pintuanProduct.saleLowPrice / 100)
+    },
+    discountLowPrice: function () {
+      return this.pintuanProduct.discountLowPrice && (this.pintuanProduct.discountLowPrice / 100)
+    },
+    cities: function () {
+      let c = []
+      this.pintuanProduct.productList && this.pintuanProduct.productList.map(function (el) {
+        c.push({
+          cityCode: el.cityCode,
+          cityName: el.cityName
+        })
+      })
+      return c
+    }
+  },
+  watch: {
   },
   methods: {
     ...mapMutations([
       'showToast',
       'showLoading',
-      'hideLoading'
+      'hideLoading',
+      'setOrderInfo'
     ]),
     ...mapActions([
       'sendSmsCode',
-      'smsLogin'
+      'smsLogin',
+      'getPintuanProduct'
     ]),
     onTabClick: function (index) {
       this.tabIndex = index
@@ -414,23 +445,72 @@ export default {
     },
     orderPopupShow (e) {
       console.log(e)
+      console.log('orderPopupShow')
     },
     orderPopupHide (e) {
       console.log(e)
+      console.log('orderPopupHide')
     },
-    setCity (cityCode) {
-      this.city = cityCode
+    clickOrderPopupButton (isDiscount) {
+      this.showOrderPopup = true
+      this.buyDiscount = isDiscount
+      this.computeOrderPrice()
+    },
+    setCity (city) {
+      this.city = city
+      this.computeOrderPrice()
     },
     setCarType (type) {
       this.carType = type
+      this.computeOrderPrice()
     },
     setCarInner () {
       this.carInner = !this.carInner
+      this.computeOrderPrice()
+    },
+    computeOrderPrice () {
+      const z = this
+      let dicountPrice = 0
+      let salePrice = 0
+      if (z.city.cityCode !== 0) {
+        z.pintuanProduct.productList && z.pintuanProduct.productList.map(function (el) {
+          if (z.city.cityCode === el.cityCode) {
+            el.categoryList.map(function (p) {
+              if (p.categoryName === z.carType) {
+                salePrice = p.salePrice
+                dicountPrice = p.dicountPrice
+                z.orderInfo.title = z.carType
+                z.orderInfo.categoryId = [p.categoryid]
+              }
+              if (z.carInner && !p.main) {
+                salePrice += p.salePrice
+                dicountPrice += p.dicountPrice
+                z.orderInfo.title += ' + 内饰清洗'
+                z.orderInfo.categoryId.push(p.categoryid)
+              }
+            })
+          }
+        })
+      }
+      z.orderInfo.salePrice = salePrice / 100
+      z.orderInfo.dicountPrice = dicountPrice / 100
+      z.orderInfo.orderPrice = z.buyDiscount ? z.orderInfo.dicountPrice : z.orderInfo.salePrice
     },
     submit () {
+      const z = this
+      if (z.city.cityCode === 0) {
+        z.showToast({
+          type: 'warn',
+          text: '请选择城市'
+        })
+      } else {
+        this.setOrderInfo(Object.assign({}, this.orderInfo, this.city))
+        this.$router.push({
+          name: 'PintuanOrder'
+        })
+      }
       console.log('submit')
     },
-    onPhoneBlur () {},
     getGraphCode () {
       this.graphCodeUrl = '/api/v3/portal/outward/getGraphCode?time=' + Number(new Date())
     },
@@ -492,11 +572,18 @@ export default {
           if (status === 200) {
             z.loginDialog = false
             z.loginLoading = false
-            z.$router.push('/pintuan/my')
+            z.$router.push({
+              name: 'PintuanMy'
+            })
           }
         })
       }
     }
+  },
+  created () {
+    this.getPintuanProduct({
+      activityId: 1
+    })
   },
   mounted () {
     console.log(this)

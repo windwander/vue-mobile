@@ -90,9 +90,10 @@ export const actions = {
         params: data
       }).then(res => {
         console.log(res.data)
+        state.pintuanProduct = res.data
         resolve()
       }).catch(error => {
-        oneError(commit, state, error, '商品下单详情页')
+        oneError(commit, state, error, '拼团商品详情')
         reject(error)
       })
     })
@@ -156,10 +157,121 @@ export const actions = {
         reject(error)
       })
     })
+  },
+  /**
+   * POST /v/groupBuyingOrder
+   * 拼多多下单
+   * @param productId
+   * @param saleAmonut
+   * @param introducerId
+   * @param actEntityId
+   * @param activityId
+   */
+  orderPintuan ({ commit, state }, data) {
+    return new Promise(function (resolve, reject) {
+      axios({
+        method: 'post',
+        url: '/api/v3/fuser/rest/v/groupBuyingOrder',
+        data: data
+      }).then(res => {
+        let orderId = res.data
+        console.log(res.data)
+        resolve(orderId)
+      }).catch(error => {
+        oneError(commit, state, error, '拼团下单')
+        reject(error)
+      })
+    })
+  },
+  /**
+   * GET /portal/isLogin
+   * 判读是否登录
+   */
+  isLogin ({ commit, state }, data) {
+    return new Promise(function (resolve, reject) {
+      axios({
+        method: 'get',
+        url: '/api/v3/portal/isLogin'
+      }).then(res => {
+        console.log(res.data)
+        let status = res.data && res.data.val === 'true'
+        resolve(status)
+      }).catch(error => {
+        oneError(commit, state, error, '登录校验')
+        reject(error)
+      })
+    })
+  },
+  /**
+   * GET /user/rest/wechat/userinfo
+   * 获取微信OpenId
+   * @param code // 微信url中的code
+   */
+  getWxOpenId ({ commit, state }, data) {
+    return new Promise(function (resolve, reject) {
+      axios({
+        method: 'get',
+        url: '/api/v3/user/rest/wechat/userinfo',
+        params: data
+      }).then(res => {
+        console.log(res.data)
+        let openId = res.data.openid
+        resolve(openId)
+      }).catch(error => {
+        oneError(commit, state, error, '获取微信OpenId')
+        reject(error)
+      })
+    })
+  },
+  /**
+   * GET /user/rest/wechat/ticket
+   * 获取微信支付Ticket
+   */
+  getWxTicket ({ commit, state }) {
+    return new Promise(function (resolve, reject) {
+      axios({
+        method: 'get',
+        url: '/api/v3/user/rest/wechat/ticket'
+      }).then(res => {
+        console.log(res.data)
+        resolve(res.data)
+      }).catch(error => {
+        oneError(commit, state, error, '获取微信支付Ticket')
+        reject(error)
+      })
+    })
+  },
+  /**
+   * POST /fuser/rest/a/h5pay
+   * H5支付
+   * @param orderId
+   * @param openId
+   * @param errorNotifyUrl ''
+   * @param redirectUrl ''
+   * @param returnUrl ''
+   * @param skuId ''
+   * @param clientSystemType '3'
+   * @param payCodeEnum4H5 '1201'
+   * @param paySourceEnum '6'
+   */
+  h5pay ({ commit, state }, data) {
+    return new Promise(function (resolve, reject) {
+      axios({
+        method: 'post',
+        url: '/api/v3/fuser/rest/a/h5pay',
+        data: data
+      }).then(res => {
+        console.log(res.data)
+        resolve(res.data)
+      }).catch(error => {
+        oneError(commit, state, error, 'H5支付')
+        reject(error)
+      })
+    })
   }
 }
 /**
- * 短信登录，包含多个接口
+ * 短信登录函数，包含多个接口
  * data: {
  *  phone,
  *  verificationCode
