@@ -42,8 +42,8 @@
           </div>
         </flexbox-item>
         <flexbox-item>
-          <img class="avatar" src="/static/pintuan/avatar@2x.png" alt="用户头像" />
-          <img class="avatar" src="/static/pintuan/avatar-default@2x.png" alt="用户头像" />
+          <img class="avatar" src="../../../static/pintuan/avatar@2x.png" alt="用户头像" />
+          <img class="avatar" src="../../../static/pintuan/avatar-default@2x.png" alt="用户头像" />
         </flexbox-item>
         <flexbox-item>
           <x-button mini plain type="primary" class="btn" action-type="button">直接参团</x-button>
@@ -54,7 +54,7 @@
       <div class="order-title vux-1px-b">
         <flexbox>
           <flexbox-item :span="1/4" class="order-logo-box">
-            <img src="/static/pintuan/order-logo@2x.png" alt="商品图标" class="order-logo">
+            <img src="../../../static/pintuan/order-logo@2x.png" alt="商品图标" class="order-logo">
           </flexbox-item>
           <flexbox-item :span="3/4">
             <div class="title-text">
@@ -92,7 +92,7 @@
       </div>
     </div>
     <div class="qr-row">
-      <img class="img" src="/static/pintuan/qr-row@2x.png" alt="公众号二维码">
+      <img class="img" src="../../../static/pintuan/qr-row@2x.png" alt="公众号二维码">
     </div>
     <tab v-model="tabIndex">
       <tab-item selected @on-item-click="onTabClick">商品详情</tab-item>
@@ -100,85 +100,85 @@
       <tab-item @on-item-click="onTabClick">玩法介绍</tab-item>
     </tab>
     <div v-if="tabIndex === 0">
-      <video src="/static/product/carwash/1.mp4" controls preload="metadata" poster="/static/product/carwash/1.png" width="100%"></video>
-      <x-img v-for="n in 11" :key="n" default-src="/static/placeholder.png" :src="'static/product/carwash/' + (n + 1) + '.png'" class="ximg" error-class="ximg-error" :offset="100" ></x-img>
+      <video src="../../../static/product/carwash/1.mp4" controls preload="metadata" poster="../../../static/product/carwash/1.png" width="100%"></video>
+      <x-img v-for="n in 11" :key="n" default-src="../../../static/placeholder.png" :src="'static/product/carwash/' + (n + 1) + '.png'" class="ximg" error-class="ximg-error" :offset="100" ></x-img>
     </div>
     <ul v-if="tabIndex === 1" class="user-comment">
       <li class="comment-row vux-1px-b">
         <flexbox>
           <flexbox-item :span="3/5">
-            <img class="avatar" src="/static/pintuan/review/group-16@2x.png" alt="用户头像" />
+            <img class="avatar" src="../../../static/pintuan/review/group-16@2x.png" alt="用户头像" />
             <div class="user-info">
               <div class="user-phone">1***7</div>
               <div class="comment-time">2017-09-13</div>
             </div>
           </flexbox-item>
           <flexbox-item class="star-box">
-            <img src="/static/pintuan/star@2x.png" class="star"/>
-            <img src="/static/pintuan/star@2x.png" class="star"/>
-            <img src="/static/pintuan/star@2x.png" class="star"/>
-            <img src="/static/pintuan/star@2x.png" class="star"/>
-            <img src="/static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
           </flexbox-item>
         </flexbox>
         <p class="comment-content">非常干净，一直相信慧驾的服务</p>
-        <x-img default-src="/static/placeholder.png" src="/static/pintuan/review/group-17@2x.png" class="ximg comment-img" error-class="ximg-error" :offset="100"></x-img>
+        <x-img default-src="../../../static/placeholder.png" src="../../../static/pintuan/review/group-17@2x.png" class="ximg comment-img" error-class="ximg-error" :offset="100"></x-img>
       </li>
       <li class="comment-row vux-1px-b">
         <flexbox>
           <flexbox-item :span="3/5">
-            <img class="avatar" src="/static/pintuan/review/group-18@2x.png" alt="用户头像" />
+            <img class="avatar" src="../../../static/pintuan/review/group-18@2x.png" alt="用户头像" />
             <div class="user-info">
               <div class="user-phone">1***7</div>
               <div class="comment-time">2017-09-13</div>
             </div>
           </flexbox-item>
           <flexbox-item class="star-box">
-            <img src="/static/pintuan/star@2x.png" class="star"/>
-            <img src="/static/pintuan/star@2x.png" class="star"/>
-            <img src="/static/pintuan/star@2x.png" class="star"/>
-            <img src="/static/pintuan/star@2x.png" class="star"/>
-            <img src="/static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
           </flexbox-item>
         </flexbox>
         <p class="comment-content">一早就预约好的，很快就洗好了，不错</p>
-        <x-img default-src="/static/placeholder.png" src="/static/pintuan/review/group-19@2x.png" class="ximg comment-img" error-class="ximg-error" :offset="100"></x-img>
+        <x-img default-src="../../../static/placeholder.png" src="../../../static/pintuan/review/group-19@2x.png" class="ximg comment-img" error-class="ximg-error" :offset="100"></x-img>
       </li>
       <li class="comment-row vux-1px-b">
         <flexbox>
           <flexbox-item :span="3/5">
-            <img class="avatar" src="/static/pintuan/review/group-20@2x.png" alt="用户头像" />
+            <img class="avatar" src="../../../static/pintuan/review/group-20@2x.png" alt="用户头像" />
             <div class="user-info">
               <div class="user-phone">1***7</div>
               <div class="comment-time">2017-09-13</div>
             </div>
           </flexbox-item>
           <flexbox-item class="star-box">
-            <img src="/static/pintuan/star@2x.png" class="star"/>
-            <img src="/static/pintuan/star@2x.png" class="star"/>
-            <img src="/static/pintuan/star@2x.png" class="star"/>
-            <img src="/static/pintuan/star@2x.png" class="star"/>
-            <img src="/static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
           </flexbox-item>
         </flexbox>
         <p class="comment-content">服务非常好，还帮我修复了车身痕迹，赞一个。</p>
-        <x-img default-src="/static/placeholder.png" src="/static/pintuan/review/group-21@2x.png" class="ximg comment-img" error-class="ximg-error" :offset="100"></x-img>
+        <x-img default-src="../../../static/placeholder.png" src="../../../static/pintuan/review/group-21@2x.png" class="ximg comment-img" error-class="ximg-error" :offset="100"></x-img>
       </li>
       <li class="comment-row vux-1px-b">
         <flexbox>
           <flexbox-item :span="3/5">
-            <img class="avatar" src="/static/pintuan/review/group-22@2x.png" alt="用户头像" />
+            <img class="avatar" src="../../../static/pintuan/review/group-22@2x.png" alt="用户头像" />
             <div class="user-info">
               <div class="user-phone">1***7</div>
               <div class="comment-time">2017-09-13</div>
             </div>
           </flexbox-item>
           <flexbox-item class="star-box">
-            <img src="/static/pintuan/star@2x.png" class="star"/>
-            <img src="/static/pintuan/star@2x.png" class="star"/>
-            <img src="/static/pintuan/star@2x.png" class="star"/>
-            <img src="/static/pintuan/star@2x.png" class="star"/>
-            <img src="/static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
           </flexbox-item>
         </flexbox>
         <p class="comment-content">车洗的很干净，态度很好，速度很快！</p>
@@ -186,38 +186,38 @@
       <li class="comment-row vux-1px-b">
         <flexbox>
           <flexbox-item :span="3/5">
-            <img class="avatar" src="/static/pintuan/review/group-23@2x.png" alt="用户头像" />
+            <img class="avatar" src="../../../static/pintuan/review/group-23@2x.png" alt="用户头像" />
             <div class="user-info">
               <div class="user-phone">1***7</div>
               <div class="comment-time">2017-09-13</div>
             </div>
           </flexbox-item>
           <flexbox-item class="star-box">
-            <img src="/static/pintuan/star@2x.png" class="star"/>
-            <img src="/static/pintuan/star@2x.png" class="star"/>
-            <img src="/static/pintuan/star@2x.png" class="star"/>
-            <img src="/static/pintuan/star@2x.png" class="star"/>
-            <img src="/static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
           </flexbox-item>
         </flexbox>
         <p class="comment-content">超赞，清洗很干净，最主要节约用水</p>
-        <x-img default-src="/static/placeholder.png" src="/static/pintuan/review/group-24@2x.png" class="ximg comment-img" error-class="ximg-error" :offset="100"></x-img>
+        <x-img default-src="../../../static/placeholder.png" src="../../../static/pintuan/review/group-24@2x.png" class="ximg comment-img" error-class="ximg-error" :offset="100"></x-img>
       </li>
       <li class="comment-row vux-1px-b">
         <flexbox>
           <flexbox-item :span="3/5">
-            <img class="avatar" src="/static/pintuan/review/group-25@2x.png" alt="用户头像" />
+            <img class="avatar" src="../../../static/pintuan/review/group-25@2x.png" alt="用户头像" />
             <div class="user-info">
               <div class="user-phone">1***7</div>
               <div class="comment-time">2017-09-13</div>
             </div>
           </flexbox-item>
           <flexbox-item class="star-box">
-            <img src="/static/pintuan/star@2x.png" class="star"/>
-            <img src="/static/pintuan/star@2x.png" class="star"/>
-            <img src="/static/pintuan/star@2x.png" class="star"/>
-            <img src="/static/pintuan/star@2x.png" class="star"/>
-            <img src="/static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
+            <img src="../../../static/pintuan/star@2x.png" class="star"/>
           </flexbox-item>
         </flexbox>
         <p class="comment-content">洗的非常非常干净，下次还会用</p>
@@ -225,7 +225,7 @@
     </ul>
     <div v-if="tabIndex === 2" class="play-introduce">
       <div class="play-ximg">
-        <x-img default-src="/static/pintuan/rule-top@2x.png" src="/static/pintuan/rule-top@2x.png" class="ximg" error-class="ximg-error" :offset="100"></x-img>
+        <x-img default-src="../../../static/pintuan/rule-top@2x.png" src="../../../static/pintuan/rule-top@2x.png" class="ximg" error-class="ximg-error" :offset="100"></x-img>
       </div>
       <div class="play-content">
         <ol>
@@ -241,7 +241,7 @@
     <flexbox class="bottombar">
       <flexbox-item class="bottombar-item">
         <a href="javascript:void(0);" class="btn-my" @click="loginDialog = true">
-          <img slot="icon" src="/static/pintuan/my-icon@2x.png" class="my-icon"><br/>
+          <img slot="icon" src="../../../static/pintuan/my-icon@2x.png" class="my-icon"><br/>
           我的拼团
         </a>
       </flexbox-item>
@@ -259,7 +259,7 @@
     <popup v-model="showOrderPopup" @on-hide="orderPopupHide" @on-show="orderPopupShow" class="popup-box">
       <div class="popup-order">
         <div class="title vux-1px-b">
-          <img src="/static/pintuan/order-logo@2x.png" alt="下单订单logo" class="title-logo">
+          <img src="../../../static/pintuan/order-logo@2x.png" alt="下单订单logo" class="title-logo">
           <div class="title-text">
             <span class="price">
               &#165;
@@ -369,7 +369,7 @@ export default {
   data () {
     return {
       swiper: [
-        '/static/pintuan/banner@2x.png'
+        '../../../static/pintuan/banner@2x.png'
       ],
       tabIndex: 0,
       showOrderPopup: false,
@@ -852,22 +852,22 @@ export default {
         background-color: @theme-color;
       }
       .car5 {
-        background-image: url(/static/pintuan/car-5.png);
+        background-image: url(../../../static/pintuan/car-5.png);
       }
       .car5.selected {
-        background-image: url(/static/pintuan/car-5-selected.png);
+        background-image: url(../../../static/pintuan/car-5-selected.png);
       }
       .suv5 {
-        background-image: url(/static/pintuan/suv-5.png);
+        background-image: url(../../../static/pintuan/suv-5.png);
       }
       .suv5.selected {
-        background-image: url(/static/pintuan/suv-5-selected.png);
+        background-image: url(../../../static/pintuan/suv-5-selected.png);
       }
       .suv7 {
-        background-image: url(/static/pintuan/suv-7.png);
+        background-image: url(../../../static/pintuan/suv-7.png);
       }
       .suv7.selected {
-        background-image: url(/static/pintuan/suv-7-selected.png);
+        background-image: url(../../../static/pintuan/suv-7-selected.png);
       }
       .margin-0 {
         margin: 0 !important;

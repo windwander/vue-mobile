@@ -315,7 +315,9 @@ export default {
     z.initWxTicket()
     let code = querystring.parse().code
     if (code) {
-      z.getWxOpenId().then(function (openId) {
+      z.getWxOpenId({
+        code: code
+      }).then(function (openId) {
         z.openId = openId
       })
     }
