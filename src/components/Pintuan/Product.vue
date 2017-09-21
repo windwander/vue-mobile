@@ -355,7 +355,8 @@ import {
   XInput,
   Countdown,
   XDialog,
-  dateFormat
+  dateFormat,
+  querystring
 } from 'vux'
 
 export default {
@@ -665,8 +666,7 @@ export default {
         z.appId = t.appid
         z.ticket = t.ticket
         let isMicroMessenger = navigator.userAgent.toLowerCase().indexOf('MicroMessenger'.toLowerCase()) > -1
-        console.log(this.$route)
-        if (isMicroMessenger && !this.$route.query.code) {
+        if (isMicroMessenger && !querystring.parse().code) {
           let redirUri = encodeURIComponent(window.location.href)
           window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + z.appId + '&redirect_uri=' + redirUri + '&response_type=code&scope=snsapi_base&state=1#wechat_redirect'
         } else {
@@ -693,11 +693,14 @@ export default {
         nonceStr: noncestr,
         signature: signature,
         jsApiList: [
-          'showOptionMenu',
-          'hideOptionMenu',
+          'showMenuItems',
+          'hideAllNonBaseMenuItem',
           'onMenuShareTimeline',
           'onMenuShareAppMessage'
         ]
+      })
+      z.$wechat.success(function (res) {
+        z.$wechat.hideAllNonBaseMenuItem()
       })
       z.$wechat.error(function (res) {
         console.log(res)
@@ -718,8 +721,15 @@ export default {
         cancel: function () {
         }
       }
+      console.log(shareConfig)
       this.$wechat.onMenuShareTimeline(shareConfig)
       this.$wechat.onMenuShareAppMessage(shareConfig)
+      this.showMenuItems({
+        menuList: [
+          'menuItem:share:appMessage',
+          'menuItem:share:timeline'
+        ]
+      })
     }
   },
   created () {
