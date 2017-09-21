@@ -141,7 +141,7 @@ export default {
         // })
       } else if (order.allStatus === '2') { // 去支付
         // z.createPay(order.orderId)
-        window.location.href = 'https://m.huijiacar.com/wlwc/wx-pay.html?orderId=' + order.orderId + '&wxpayReturnUri=' + encodeURIComponent('https://m.huijiacar.com/vue-mobile/#/pintuan/my')
+        window.location.href = 'http://m.huijiacar.com/wlwc/wx-pay.html?orderId=' + order.orderId + '&wxpayReturnUri=' + encodeURIComponent('https://m.huijiacar.com/vue-mobile/#/pintuan/my')
       } else if (order.allStatus === '3') { // 邀请好友
         console.log('邀请好友')
       } else if (order.allStatus === '4') { // 重新拼团

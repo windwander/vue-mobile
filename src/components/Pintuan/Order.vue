@@ -210,7 +210,7 @@ export default {
         activityId: 1
       }).then(function (orderId) {
         // z.createPay(orderId)
-        window.location.href = 'https://m.huijiacar.com/wlwc/wx-pay.html?orderId=' + orderId + '&wxpayReturnUri=' + encodeURIComponent('https://m.huijiacar.com/vue-mobile/#/pintuan/my')
+        window.location.href = 'http://m.huijiacar.com/wlwc/wx-pay.html?orderId=' + orderId + '&wxpayReturnUri=' + encodeURIComponent('https://m.huijiacar.com/vue-mobile/#/pintuan/my')
       })
     },
     createPay (orderId) {
