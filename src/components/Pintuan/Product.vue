@@ -29,7 +29,7 @@
     </div>
     <div v-if="actEntityId && group.entityTimeOut" class="invite-row">
       <flexbox>
-        <flexbox-item :span="3/10" class="vux-1px-r">
+        <flexbox-item v-if="group.groupNowMember < group.groupRequireMember" :span="2/5" class="vux-1px-r">
           <div class="remain-people">
             还差
             <span class="number">{{ group.groupRequireMember - group.groupNowMember }}</span>
@@ -45,7 +45,8 @@
           <img class="avatar" v-for="(url, index) in group.picturl" :key="index" :src="url || '~static/pintuan/avatar-default@2x.png'" alt="用户头像'" />
         </flexbox-item>
         <flexbox-item>
-          <x-button mini plain type="primary" class="btn" action-type="button" @click.native="clickJoin(group)">直接参团</x-button>
+          <x-button v-if="group.groupNowMember >= group.groupRequireMember" mini plain type="warn" disabled action-type="button">团购完成</x-button>
+          <x-button v-if="group.groupNowMember < group.groupRequireMember" mini plain type="primary" class="btn" action-type="button" @click.native="clickJoin(group)">直接参团</x-button>
         </flexbox-item>
       </flexbox>
     </div>
@@ -828,8 +829,9 @@ export default {
   .avatar {
     width: 3em;
     height: 3em;
-    margin-right: 2px;
+    margin-right: -1.5em;
     border-radius: 1.5em;
+    box-shadow: 0 0 0.5em 0px #333;
   }
   .btn {
     color: @theme-color;
@@ -864,8 +866,9 @@ export default {
     .avatar {
       width: 3em;
       height: 3em;
-      margin-right: 2px;
+      margin-right: -1.5em;
       border-radius: 1.5em;
+      box-shadow: 0 0 0.5em 0px #333;
     }
     .remain-people {
       font-size: 0.875rem;

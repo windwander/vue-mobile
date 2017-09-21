@@ -8,43 +8,46 @@
       <tab-item disabled></tab-item>
       <tab-item disabled></tab-item>
     </tab> -->
-    <div class="list-row" v-for="order in pintuanMyGroup" :key="order.actEntityId">
-      <div class="order-info">{{ getStatusName(order.allStatus) }}</div>
-      <div class="order-title vux-1px-t vux-1px-b">
-        <flexbox>
-          <flexbox-item :span="1/4" class="order-logo-box">
-            <img src="../../../static/pintuan/order-logo@2x.png" alt="商品图标" class="order-logo">
-          </flexbox-item>
-          <flexbox-item :span="3/4">
-            <div class="title-text">
-              <div class="product-text">
-                <span>{{ order.productName }}</span>
+    <div v-if="pintuanMyGroup.length">
+      <div class="list-row" v-for="order in pintuanMyGroup" :key="order.actEntityId">
+        <div class="order-info">{{ getStatusName(order.allStatus) }}</div>
+        <div class="order-title vux-1px-t vux-1px-b">
+          <flexbox>
+            <flexbox-item :span="1/4" class="order-logo-box">
+              <img src="../../../static/pintuan/order-logo@2x.png" alt="商品图标" class="order-logo">
+            </flexbox-item>
+            <flexbox-item :span="3/4">
+              <div class="title-text">
+                <div class="product-text">
+                  <span>{{ order.productName }}</span>
+                </div>
+                <div class="price">
+                  实际支付：
+                  <span class="number">{{ Number(order.saleAmout) / 100 }}</span>
+                  元
+                </div>
               </div>
-              <div class="price">
-                实际支付：
-                <span class="number">{{ Number(order.saleAmout) / 100 }}</span>
-                元
+            </flexbox-item>
+          </flexbox>
+        </div>
+        <div class="order-bottom">
+          <flexbox>
+            <flexbox-item>
+              <div class="action-info">
+                订单ID：{{ order.orderId }}
               </div>
-            </div>
-          </flexbox-item>
-        </flexbox>
-      </div>
-      <div class="order-bottom">
-        <flexbox>
-          <flexbox-item>
-            <!-- <div class="action-info">
-              15分钟未付款的订单将自动关闭
-            </div> -->
-          </flexbox-item>
-          <flexbox-item v-if="order.allStatus === '2'" class="btn-wrapper">
-            <x-button mini plain type="default" class="btn-default" action-type="button" @click.native="cancelOrder(order.orderId)">取消订单</x-button>
-          </flexbox-item>
-          <flexbox-item class="btn-wrapper">
-            <x-button mini plain type="primary" class="btn-primary" action-type="button" @click.native="clickBtn(order)">{{ getStatusBtnName(order.allStatus) }}</x-button>
-          </flexbox-item>
-        </flexbox>
+            </flexbox-item>
+            <flexbox-item v-if="order.allStatus === '2'" class="btn-wrapper">
+              <x-button mini plain type="default" class="btn-default" action-type="button" @click.native="cancelOrder(order.orderId)">取消订单</x-button>
+            </flexbox-item>
+            <flexbox-item class="btn-wrapper">
+              <x-button mini plain type="primary" class="btn-primary" action-type="button" @click.native="clickBtn(order)">{{ getStatusBtnName(order.allStatus) }}</x-button>
+            </flexbox-item>
+          </flexbox>
+        </div>
       </div>
     </div>
+    <div class="no-data" v-else>当前没有参加拼团</div>
   </div>
 </template>
 <script>
@@ -302,5 +305,9 @@ export default {
       border-color: @theme-color;
     }
   }
+}
+.no-data {
+  text-align: center;
+  color: @grey-text;
 }
 </style>

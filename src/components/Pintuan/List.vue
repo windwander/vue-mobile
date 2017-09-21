@@ -7,7 +7,7 @@
     </tab> -->
     <div v-for="group in pintuanAllGroup" :key="group.actEntityId" class="invite-row vux-1px-b">
       <flexbox>
-        <flexbox-item :span="3/10" class="vux-1px-r">
+        <flexbox-item :span="2/5" class="vux-1px-r">
           <div class="remain-people">
             还差
             <span class="number">{{ group.groupRequireMember - group.groupNowMember }}</span>
@@ -174,8 +174,9 @@ export default {
   .avatar {
     width: 3em;
     height: 3em;
-    margin-right: 2px;
+    margin-right: -1.5em;
     border-radius: 1.5em;
+    box-shadow: 0 0 0.5em 0px #333;
   }
   .btn {
     color: @theme-color;
