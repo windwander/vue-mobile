@@ -10,7 +10,7 @@ export const state = {
     text: ''
   },
   pintuanProduct: {},
-  // orderInfo: {},
+  pintuanMyGroup: {},
   pintuanAllGroup: {}
 }
 

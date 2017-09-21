@@ -86,8 +86,7 @@ import {
   Cell,
   XInput,
   XButton,
-  Countdown,
-  querystring
+  Countdown
 } from 'vux'
 export default {
   components: {
@@ -206,7 +205,7 @@ export default {
         productCatalog: z.orderInfo.categoryId.toString(),
         saleAmonut: z.orderInfo.salePrice * 100,
         introducerId: '',
-        actEntityId: '',
+        actEntityId: z.orderInfo.actEntityId || '',
         activityId: 1
       }).then(function (orderId) {
         z.createPay(orderId)
@@ -238,7 +237,7 @@ export default {
             // 支付成功
             console.log(res)
             this.$router.push({
-              name: 'PintuanProduct'
+              name: 'PintuanMy'
             })
           }
         })
@@ -267,9 +266,8 @@ export default {
       z.getWxTicket().then(function (t) {
         z.appId = t.appid
         z.ticket = t.ticket
-        console.dir(querystring.parse())
         let isMicroMessenger = navigator.userAgent.toLowerCase().indexOf('MicroMessenger'.toLowerCase()) > -1
-        if (isMicroMessenger && !querystring.parse().code) {
+        if (isMicroMessenger && !z.$router.query.code) {
           let redirUri = encodeURIComponent(window.location.href)
           window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + z.appId + '&redirect_uri=' + redirUri + '&response_type=code&scope=snsapi_base&state=1#wechat_redirect'
         } else {
@@ -325,7 +323,7 @@ export default {
     const z = this
     console.log(this.orderInfo)
     z.initWxTicket()
-    let code = querystring.parse().code
+    let code = z.$router.query.code
     if (code) {
       z.getWxOpenId({
         code: code

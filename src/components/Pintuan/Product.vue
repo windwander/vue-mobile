@@ -22,12 +22,12 @@
           份
         </span> -->
       </div>
-      <div v-if="actEntityId" class="pintuan-all">
+      <div v-if="actEntityId && group.entityTimeOut" class="pintuan-all">
         <span>想买了？可直接参与下面的团</span>
-        <a href="#" class="link">全部拼团></a>
+        <router-link :to="{ name: 'PintuanList' }" class="link">全部拼团></router-link>
       </div>
     </div>
-    <div v-if="actEntityId" class="invite-row">
+    <div v-if="actEntityId && group.entityTimeOut" class="invite-row">
       <flexbox>
         <flexbox-item :span="3/10" class="vux-1px-r">
           <div class="remain-people">
@@ -239,13 +239,13 @@
     <div class="bottombar-push"></div>
     <flexbox class="bottombar">
       <flexbox-item class="bottombar-item">
-        <a href="javascript:void(0);" class="btn-my" @click="loginDialog = true">
+        <a href="javascript:void(0);" class="btn-my" @click="clickMyBtn">
           <img slot="icon" src="~static/pintuan/my-icon@2x.png" class="my-icon"><br/>
           我的拼团
         </a>
       </flexbox-item>
       <flexbox-item class="bottombar-item">
-      <a href="javascript:void(0);" class="btn-single" @click="clickOrderPopupButton(false)">
+      <a href="/wlwc/" class="btn-single">
         {{ saleLowPrice }}元起<br/>单独购买
       </a>
       </flexbox-item>
@@ -397,7 +397,8 @@ export default {
       graphCodeUrl: '/api/v3/portal/outward/getGraphCode',
       disableGraphCode: false,
       actEntityId: '',
-      group: {}
+      group: {},
+      isUserLogin: false
     }
   },
   computed: {
@@ -434,7 +435,8 @@ export default {
       'sendSmsCode',
       'smsLogin',
       'getPintuanProduct',
-      'getPintuanDetails'
+      'getPintuanDetails',
+      'isLogin'
     ]),
     onTabClick: function (index) {
       this.tabIndex = index
@@ -508,6 +510,9 @@ export default {
         })
       } else {
         let allOrderInfo = Object.assign({}, z.orderInfo, z.city)
+        if (z.actEntityId) {
+          allOrderInfo.actEntityId = z.actEntityId
+        }
         sessionStorage.setItem('pintuanOrderInfo', JSON.stringify(allOrderInfo))
         z.setOrderInfo()
         z.$router.push({
@@ -597,6 +602,15 @@ export default {
     },
     formatDate (time) {
       return dateFormat(time, 'YYYY-MM-DD')
+    },
+    clickMyBtn () {
+      if (this.isUserLogin) {
+        this.$router.push({
+          name: 'PintuanMy'
+        })
+      } else {
+        this.loginDialog = true
+      }
     }
   },
   created () {
@@ -613,6 +627,9 @@ export default {
         z.group = group
       })
     }
+    z.isLogin().then(function (status) {
+      z.isUserLogin = status
+    })
   },
   mounted () {
     console.log(this)

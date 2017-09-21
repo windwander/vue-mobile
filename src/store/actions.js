@@ -132,6 +132,7 @@ export const actions = {
         params: data
       }).then(res => {
         console.log(res.data)
+        state.pintuanMyGroup = res.data
         resolve(res.data)
       }).catch(error => {
         oneError(commit, state, error, '查询我的拼团信息')
