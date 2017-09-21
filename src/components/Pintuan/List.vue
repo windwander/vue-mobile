@@ -15,7 +15,7 @@
           </div>
           <div class="countdown">
             剩余：
-            <clocker :time="formatDate(new Date(group.startDateTime).getTime() + (group.entityTimeOut * 60 * 60 * 1000))" format="%H : %M : %S">
+            <clocker v-if="group.startDateTime" :time="formatDate(new Date(group.startDateTime).getTime() + (group.entityTimeOut * 60 * 60 * 1000))" format="%H : %M : %S">
             </clocker>
           </div>
         </flexbox-item>
