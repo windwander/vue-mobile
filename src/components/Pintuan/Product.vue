@@ -23,7 +23,8 @@
         </span> -->
       </div>
       <div v-if="actEntityId && group.entityTimeOut" class="pintuan-all">
-        <span>想买了？可直接参与下面的团</span>
+        <span v-if="group.groupNowMember < group.groupRequireMember">想买了？可直接参与下面的团</span>
+        <span v-else>&nbsp;</span>
         <router-link :to="{ name: 'PintuanList' }" class="link">全部拼团></router-link>
       </div>
     </div>
@@ -41,10 +42,10 @@
             </clocker>
           </div>
         </flexbox-item>
-        <flexbox-item>
+        <flexbox-item :class="{'inner-center': group.groupNowMember >= group.groupRequireMember}">
           <img class="avatar" v-for="(url, index) in group.picturl" :key="index" :src="url || '~static/pintuan/avatar-default@2x.png'" alt="用户头像'" />
         </flexbox-item>
-        <flexbox-item>
+        <flexbox-item :class="{'inner-center': group.groupNowMember >= group.groupRequireMember}">
           <x-button v-if="group.groupNowMember >= group.groupRequireMember" mini plain type="warn" disabled action-type="button">团购完成</x-button>
           <x-button v-if="group.groupNowMember < group.groupRequireMember" mini plain type="primary" class="btn" action-type="button" @click.native="clickJoin(group)">直接参团</x-button>
         </flexbox-item>
@@ -251,7 +252,7 @@
       </a>
       </flexbox-item>
       <flexbox-item class="bottombar-item">
-        <a href="javascript:void(0);" class="btn-pintuan" @click="clickOrderPopupButton(true)">
+        <a href="javascript:void(0);" class="btn-pintuan" @click="clickOrderPopupButton(true, false)">
           {{ discountLowPrice }}元起<br/>3人拼团
         </a>
       </flexbox-item>
@@ -394,6 +395,7 @@ export default {
       // carTypeNames: ['五座SUV', '五座轿车', '七座商务'],
       carInner: false,
       buyDiscount: false,
+      isJoin: false,
       orderPrice: '',
       orderInfo: {
         title: '五座轿车',
@@ -472,9 +474,10 @@ export default {
       console.log(e)
       console.log('orderPopupHide')
     },
-    clickOrderPopupButton (isDiscount) {
+    clickOrderPopupButton (isDiscount, isJoin) {
       this.showOrderPopup = true
       this.buyDiscount = isDiscount
+      this.isJoin = isJoin
       this.computeOrderPrice()
     },
     setCity (city) {
@@ -526,7 +529,7 @@ export default {
         })
       } else {
         let allOrderInfo = Object.assign({}, z.orderInfo, z.city)
-        if (z.actEntityId) {
+        if (z.actEntityId && z.isJoin) {
           allOrderInfo.actEntityId = z.actEntityId
         }
         sessionStorage.setItem('pintuanOrderInfo', JSON.stringify(allOrderInfo))
@@ -607,7 +610,7 @@ export default {
       }
     },
     clickJoin (group) {
-      this.clickOrderPopupButton(true)
+      this.clickOrderPopupButton(true, true)
       console.log(group)
     },
     formatDate (time) {
@@ -761,7 +764,7 @@ export default {
   mounted () {
     const z = this
     if (z.$route.query.autoJoin) {
-      z.clickOrderPopupButton(true)
+      z.clickOrderPopupButton(true, true)
     }
     if (z.$route.query.actEntityId) {
       z.initShareInfo(z.actEntityId)
@@ -1109,5 +1112,8 @@ export default {
     background-color: transparent;
     background-image: url(~static/pintuan/share@2x.png);
   }
+}
+.inner-center {
+  text-align: center;
 }
 </style>

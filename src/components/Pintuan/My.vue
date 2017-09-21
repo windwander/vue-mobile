@@ -10,7 +10,10 @@
     </tab> -->
     <div v-if="pintuanMyGroup.length">
       <div class="list-row" v-for="order in pintuanMyGroup" :key="order.actEntityId">
-        <div class="order-info">{{ getStatusName(order.allStatus) }}</div>
+        <div class="order-info">
+          {{ getStatusName(order.allStatus) }}
+          <span class="order-id">订单ID：{{ order.orderId }}</span>
+        </div>
         <div class="order-title vux-1px-t vux-1px-b">
           <flexbox>
             <flexbox-item :span="1/4" class="order-logo-box">
@@ -34,7 +37,9 @@
           <flexbox>
             <flexbox-item>
               <div class="action-info">
-                订单ID：{{ order.orderId }}
+                剩余：
+                <clocker :time="formatDate(new Date(new Date(order.startDateTime).getTime() + (order.entityTimeOut * 60 * 60 * 1000)))" format="%H : %M : %S">
+                </clocker>
               </div>
             </flexbox-item>
             <flexbox-item v-if="order.allStatus === '2'" class="btn-wrapper">
@@ -60,6 +65,7 @@ import {
   FlexboxItem,
   Clocker,
   XButton,
+  dateFormat,
   querystring
 } from 'vux'
 export default {
@@ -99,6 +105,9 @@ export default {
     },
     getStatusBtnName (status) {
       return this.statusBtnNames[status]
+    },
+    formatDate (time) {
+      return dateFormat(time, 'YYYY-MM-DD')
     },
     clickBtn (order) {
       console.log(order)
@@ -248,7 +257,10 @@ export default {
     z.initWxTicket()
   },
   mounted () {
-    // const z = this
+    const z = this
+    setTimeout(function () {
+      z.getPintuanMyGroups()
+    }, 2000)
     // let code = querystring.parse().code
     // if (code) {
     //   z.getWxOpenId({
@@ -269,6 +281,9 @@ export default {
 .list-row {
   .order-info {
     padding: 0.5em 1em;
+    .order-id {
+      float: right;
+    }
   }
   .order-title {
     padding: 1em;
