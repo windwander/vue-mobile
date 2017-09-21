@@ -332,7 +332,7 @@
         {{ existOrder.productName }}
       </div>
     </confirm>
-    <x-dialog v-model="showShareBox" class="dialog-share" hide-on-blur @on-hide="hideShareBox" :dialog-style="{width: '100%', maxWidth: '100%', backgroundColor: 'transparent', marginTop: '-40%', height: '300px'}">
+    <x-dialog v-model="showShareBox" class="dialog-share" hide-on-blur @on-hide="hideShareBox" :dialog-style="{width: '100%', maxWidth: '100%', backgroundColor: 'transparent'}">
       <div class="img-box" @click="showShareBox = false"></div>
     </x-dialog>
   </div>
