@@ -52,7 +52,7 @@
         </div>
       </div>
     </div>
-    <div class="no-data" v-else>当前没有参加拼团</div>
+    <div v-else class="no-data">当前没有参加拼团</div>
   </div>
 </template>
 <script>

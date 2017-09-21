@@ -5,28 +5,34 @@
       <tab-item disabled></tab-item>
       <tab-item disabled></tab-item>
     </tab> -->
-    <div v-for="group in pintuanAllGroup" :key="group.actEntityId" class="invite-row vux-1px-b">
-      <flexbox>
-        <flexbox-item :span="2/5" class="vux-1px-r">
-          <div class="remain-people">
-            还差
-            <span class="number">{{ group.groupRequireMember - group.groupNowMember }}</span>
-            人
-          </div>
-          <div class="countdown">
-            剩余：
-            <clocker v-if="group.startDateTime" :time="formatDate(group.startDateTime, group.entityTimeOut)" format="%H : %M : %S">
-            </clocker>
-          </div>
-        </flexbox-item>
-        <flexbox-item>
-          <img class="avatar" v-for="(url, index) in group.picturl" :key="index" :src="url || '~static/pintuan/avatar-default@2x.png'" alt="用户头像'" />
-        </flexbox-item>
-        <flexbox-item>
-          <x-button v-if="group.isjoin === '0'" mini plain type="primary" class="btn" action-type="button" @click.native="clickJoin(group)">直接参团</x-button>
-          <x-button v-if="group.isjoin === '1'" mini plain type="primary" class="btn" action-type="button" @click.native="clickInvite(group)">邀请好友</x-button>
-        </flexbox-item>
-      </flexbox>
+    <div v-if="pintuanAllGroup.length">
+      <div v-for="group in pintuanAllGroup" :key="group.actEntityId" class="invite-row vux-1px-b">
+        <flexbox>
+          <flexbox-item :span="2/5" class="vux-1px-r">
+            <div class="remain-people">
+              还差
+              <span class="number">{{ group.groupRequireMember - group.groupNowMember }}</span>
+              人
+            </div>
+            <div class="countdown">
+              剩余：
+              <clocker v-if="group.startDateTime" :time="formatDate(group.startDateTime, group.entityTimeOut)" format="%H : %M : %S">
+              </clocker>
+            </div>
+          </flexbox-item>
+          <flexbox-item>
+            <img class="avatar" v-for="(url, index) in group.picturl" :key="index" :src="url || '~static/pintuan/avatar-default@2x.png'" alt="用户头像'" />
+          </flexbox-item>
+          <flexbox-item>
+            <x-button v-if="group.isjoin === '0'" mini plain type="primary" class="btn" action-type="button" @click.native="clickJoin(group)">直接参团</x-button>
+            <x-button v-if="group.isjoin === '1'" mini plain type="primary" class="btn" action-type="button" @click.native="clickInvite(group)">邀请好友</x-button>
+          </flexbox-item>
+        </flexbox>
+      </div>
+    </div>
+    <div v-else class="no-data">
+      <span>当前没有进行中的拼团</span>
+      <x-button type="primary" class="btn" action-type="button" @click.native="clickNewGroup">发起拼团</x-button>
     </div>
   </div>
 </template>
@@ -84,6 +90,11 @@ export default {
         query: {
           actEntityId: group.actEntityId
         }
+      })
+    },
+    clickNewGroup () {
+      this.$router.push({
+        name: 'PintuanProduct'
       })
     },
     formatDate (startDateTime, entityTimeOut) {
@@ -183,5 +194,11 @@ export default {
     color: @theme-color;
     border-color: @theme-color;
   }
+}
+.no-data {
+  text-align: center;
+  color: @grey-text;
+  line-height: 3;
+  margin: 1em;
 }
 </style>
