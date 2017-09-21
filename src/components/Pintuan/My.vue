@@ -90,7 +90,8 @@ import {
   Flexbox,
   FlexboxItem,
   Clocker,
-  XButton
+  XButton,
+  querystring
 } from 'vux'
 export default {
   components: {
@@ -196,7 +197,7 @@ export default {
         z.appId = t.appid
         z.ticket = t.ticket
         let isMicroMessenger = navigator.userAgent.toLowerCase().indexOf('MicroMessenger'.toLowerCase()) > -1
-        if (isMicroMessenger && !(z.$router.query && z.$router.query.code)) {
+        if (isMicroMessenger && !querystring.parse().code) {
           let redirUri = encodeURIComponent(window.location.href)
           window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + z.appId + '&redirect_uri=' + redirUri + '&response_type=code&scope=snsapi_base&state=1#wechat_redirect'
         } else {
@@ -250,10 +251,10 @@ export default {
   mounted () {
     const z = this
     z.initWxTicket()
-    console.log(z.$router.query)
-    if (z.$router.query && z.$router.query.code) {
+    let code = querystring.parse().code
+    if (code) {
       z.getWxOpenId({
-        code: z.$router.query.code
+        code: code
       }).then(function (openId) {
         z.openId = openId
       })
