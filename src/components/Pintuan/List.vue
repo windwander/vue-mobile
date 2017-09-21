@@ -87,11 +87,12 @@ export default {
       })
     },
     formatDate (startDateTime, entityTimeOut) {
-      alert(startDateTime)
-      alert(entityTimeOut)
-      alert(new Date(startDateTime).getTime())
-      alert(entityTimeOut * 60 * 60 * 1000)
-      alert((new Date(startDateTime).getTime()) + (entityTimeOut * 60 * 60 * 1000))
+      alert(dateFormat(startDateTime, 'YYYY-MM-DD'))
+      // alert(startDateTime)
+      // alert(entityTimeOut)
+      // alert(new Date(startDateTime).getTime())
+      // alert(entityTimeOut * 60 * 60 * 1000)
+      // alert((new Date(startDateTime).getTime()) + (entityTimeOut * 60 * 60 * 1000))
       return dateFormat(startDateTime, 'YYYY-MM-DD')
     },
     randomStr (len) {
