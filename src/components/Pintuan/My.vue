@@ -210,7 +210,7 @@ export default {
       let signStr = 'jsapi_ticket=' + z.ticket + '&noncestr=' + noncestr + '&timestamp=' + timestamp + '&url=' + url
       let signature = sha1(signStr).toString()
       z.$wechat.config({
-        debug: true, // 开发者工具显示详情
+        debug: false, // 开发者工具显示详情
         appId: z.appId,
         timestamp: timestamp,
         nonceStr: noncestr,
