@@ -329,7 +329,7 @@
         {{ existOrder.productName }}
       </div>
     </confirm>
-    <x-dialog v-model="showShareBox" class="dialog-share" hide-on-blur :dialog-style="{width: '100%', maxWidth: '100%', backgroundColor: 'transparent'}">
+    <x-dialog v-model="showShareBox" class="dialog-share" hide-on-blur @on-hide="hideShareBox" :dialog-style="{width: '100%', maxWidth: '100%', backgroundColor: 'transparent'}">
       <div class="img-box" @click="showShareBox = false"></div>
     </x-dialog>
   </div>
@@ -337,6 +337,7 @@
 
 <script>
 import { mapMutations, mapActions, mapState } from 'vuex'
+import sha1 from 'crypto-js/sha1'
 import {
   Swiper,
   SwiperItem,
@@ -451,6 +452,8 @@ export default {
       'getPintuanDetails',
       'getPintuanExist',
       'cancelPintuanOrder',
+      'getWxTicket',
+      'getWxOpenId',
       'isLogin'
     ]),
     onTabClick: function (index) {
@@ -600,12 +603,6 @@ export default {
       }
     },
     clickJoin (group) {
-      // this.$router.push({
-      //   name: 'PintuanProduct',
-      //   query: {
-      //     actEntityId: group.actEntityId
-      //   }
-      // })
       this.clickOrderPopupButton(true)
       console.log(group)
     },
@@ -646,6 +643,79 @@ export default {
           z.showExistOrder = true
         }
       })
+    },
+    hideShareBox () {
+      sessionStorage.removeItem('showShareBox')
+    },
+    randomStr (len) {
+      len = len || 32
+      const chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678' // 默认去掉了容易混淆的字符oOLl, 9gq, Vv, Uu, I1
+      let maxPos = chars.length
+      let pwd = ''
+      for (let i = 0; i < len; i++) {
+        pwd += chars.charAt(Math.floor(Math.random() * maxPos))
+      }
+      return pwd
+    },
+    initWxTicket () {
+      const z = this
+      z.getWxTicket().then(function (t) {
+        z.appId = t.appid
+        z.ticket = t.ticket
+        let isMicroMessenger = navigator.userAgent.toLowerCase().indexOf('MicroMessenger'.toLowerCase()) > -1
+        if (isMicroMessenger && !this.$route.query.code) {
+          let redirUri = encodeURIComponent(window.location.href)
+          window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + z.appId + '&redirect_uri=' + redirUri + '&response_type=code&scope=snsapi_base&state=1#wechat_redirect'
+        } else {
+          z.initWxConfig()
+        }
+        console.log(t)
+      }).catch(function () {
+        // 清除失效的微信code
+        location.search = ''
+      })
+    },
+    initWxConfig () {
+      const z = this
+      let noncestr = z.randomStr(16)
+      let timestamp = new Date().getTime().toString().substr(0, 10)
+      let url = decodeURIComponent(location.href).split('#')[0]
+      let signStr = 'jsapi_ticket=' + z.ticket + '&noncestr=' + noncestr + '&timestamp=' + timestamp + '&url=' + url
+      let signature = sha1(signStr).toString()
+      z.$wechat.config({
+        debug: true, // 开发者工具显示详情
+        appId: z.appId,
+        timestamp: timestamp,
+        nonceStr: noncestr,
+        signature: signature,
+        jsApiList: [
+          'showOptionMenu',
+          'hideOptionMenu',
+          'onMenuShareTimeline',
+          'onMenuShareAppMessage'
+        ]
+      })
+      z.$wechat.error(function (res) {
+        console.log(res)
+        z.showToast({
+          type: 'warn',
+          text: '微信权限验证配置失败'
+        })
+      })
+    },
+    initShareInfo (link) {
+      const shareConfig = {
+        title: '慧驾邀请您参加洗车拼团',
+        desc: '上门洗车3人拼团15元起，拥有三项自主专利，温和去污不伤漆，超柔洁净不留痕',
+        link: link,
+        imgUrl: 'https://m.huijiacar.com/vue-mobile/static/pintuan/share-logo.png',
+        success: function () {
+        },
+        cancel: function () {
+        }
+      }
+      this.$wechat.onMenuShareTimeline(shareConfig)
+      this.$wechat.onMenuShareAppMessage(shareConfig)
     }
   },
   created () {
@@ -669,9 +739,21 @@ export default {
         z.checkExistOrder()
       }
     })
+    if (sessionStorage.getItem('showShareBox') && z.actEntityId) {
+      z.showShareBox = true
+    }
+    z.initWxTicket()
   },
   mounted () {
-    console.log(this)
+    const z = this
+    if (z.$route.query.autoJoin) {
+      z.clickOrderPopupButton(true)
+    }
+    if (z.$route.query.actEntityId) {
+      let link = z.$route.fullPath
+      console.log(link)
+      z.initShareInfo(link)
+    }
   }
 }
 </script>

@@ -68,13 +68,19 @@ export default {
       this.$router.push({
         name: 'PintuanProduct',
         query: {
+          actEntityId: group.actEntityId,
+          autoJoin: true
+        }
+      })
+    },
+    clickInvite (group) {
+      sessionStorage.setItem('showShareBox', true)
+      this.$router.push({
+        name: 'PintuanProduct',
+        query: {
           actEntityId: group.actEntityId
         }
       })
-      console.log(group)
-    },
-    clickInvite (group) {
-      console.log(group)
     },
     formatDate (time) {
       return dateFormat(time, 'YYYY-MM-DD')

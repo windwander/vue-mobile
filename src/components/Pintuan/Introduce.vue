@@ -15,7 +15,7 @@
     <div class="func-two">
       <p class="func-title">方法二</p>
       <ul>
-        <li>或下载慧驾汽车网APP</li>
+        <li><span style="color: #0084e0;">各大应用市场搜索慧驾汽车网，</span>即刻下载慧驾下载慧驾汽车网APP体验服务</li>
         <li>可在我的>计次卡中查看所购服务类型</li>
         <li>点击首页“上门洗车”</li>
         <li>选择服务车型（注意与拼团购买的服务一致）</li>

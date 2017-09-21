@@ -24,35 +24,40 @@ var router = new Router({
       name: 'PintuanProduct',
       component: PintuanProduct,
       meta: {
-        title: '商品详情页'
+        title: '商品详情页',
+        scrollToTop: true
       }
     }, {
       path: '/pintuan/order',
       name: 'PintuanOrder',
       component: PintuanOrder,
       meta: {
-        title: '确认订单'
+        title: '确认订单',
+        scrollToTop: true
       }
     }, {
       path: '/pintuan/list',
       name: 'PintuanList',
       component: PintuanList,
       meta: {
-        title: '全部拼团'
+        title: '全部拼团',
+        scrollToTop: true
       }
     }, {
       path: '/pintuan/my',
       name: 'PintuanMy',
       component: PintuanMy,
       meta: {
-        title: '我的拼团'
+        title: '我的拼团',
+        scrollToTop: true
       }
     }, {
       path: '/pintuan/introduce',
       name: 'PintuanIntroduce',
       component: PintuanIntroduce,
       meta: {
-        title: '使用说明'
+        title: '使用说明',
+        scrollToTop: true
       }
     }
   ]
