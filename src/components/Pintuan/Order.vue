@@ -24,7 +24,7 @@
         </flexbox-item>
       </flexbox>
     </div>
-    <group v-if="!isUserLogin" labelWidth="4em" gutter="0">
+    <group v-if="!isUserLogin" labelWidth="6em" gutter="0">
       <x-input name="mobile" title="" class="login-input" placeholder="请输入手机号码" keyboard="number" :show-clear="false" v-model="phone" is-type="china-mobile" ref="phone"></x-input>
       <x-input name="graphCode" title="" class="login-input" placeholder="请输入图形验证码" keyboard="number" :show-clear="false" v-model="graphCode" :min="4" :max="4" ref="graphCode">
         <x-button slot="right" type="primary" class="graphcode" :style="{backgroundImage: 'url(' + graphCodeUrl + ')'}" title="刷新图形验证码" mini @click.native="getGraphCode">获取图形验证码</x-button>
@@ -37,10 +37,10 @@
         </x-button>
       </x-input>
     </group>
-    <group labelWidth="4em" labelAlign="left" gutter="0.5em">
+    <group labelWidth="6em" labelAlign="left" gutter="0.5em">
       <x-input title="城市" disabled v-model="orderInfo.cityName"></x-input>
     </group>
-    <group labelWidth="4em" labelAlign="left" gutter="0.5em">
+    <group labelWidth="6em" labelAlign="left" gutter="0.5em">
       <x-input title="购买须知" disabled></x-input>
       <cell>
         <div slot="inline-desc" class="buy-tips">
@@ -50,7 +50,7 @@
         </div>
       </cell>
     </group>
-    <group labelWidth="4em" labelAlign="left" gutter="0.5em">
+    <group labelWidth="6em" labelAlign="left" gutter="0.5em">
       <x-input title="支付方式" disabled></x-input>
       <cell title="微信支付" class="pay-way">
         <img src="~static/pintuan/wechat-pay@2x.png" slot="icon" class="wechat-pay-icon" alt="微信支付图标">
@@ -111,7 +111,8 @@ export default {
       verifyCode: '',
       graphCodeUrl: '/api/v3/portal/outward/getGraphCode',
       disableGraphCode: false,
-      isUserLogin: false
+      isUserLogin: false,
+      isPaying: false
     }
   },
   computed: {
@@ -201,6 +202,7 @@ export default {
     },
     createOrder () {
       const z = this
+      z.isPaying = true
       z.orderPintuan({
         productId: '',
         productCatalog: z.orderInfo.categoryId.toString(),
@@ -209,8 +211,11 @@ export default {
         actEntityId: z.orderInfo.actEntityId || '',
         activityId: 1
       }).then(function (orderId) {
+        z.isPaying = false
         // z.createPay(orderId)
         window.location.href = 'http://m.huijiacar.com/wlwc/wx-pay.html?orderId=' + orderId + '&wxpayReturnUri=' + encodeURIComponent('https://m.huijiacar.com/vue-mobile/#/pintuan/my')
+      }).catch(function () {
+        z.isPaying = false
       })
     },
     createPay (orderId) {
@@ -248,7 +253,9 @@ export default {
     payBtn () {
       const z = this
       if (z.isUserLogin) {
-        z.createOrder()
+        if (!z.isPaying) {
+          z.createOrder()
+        }
       } else {
         z.doLogin()
       }
@@ -394,7 +401,7 @@ export default {
     height: 3em;
   }
   .bottombar-push {
-    height: 4em;
+    height: 6em;
   }
   .bottombar {
     position: fixed;

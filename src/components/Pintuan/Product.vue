@@ -49,7 +49,7 @@
         </flexbox-item>
       </flexbox>
     </div>
-    <!-- <div class="direct-join-row">
+    <!-- <div v-if="actEntityId && group.entityTimeOut" class="direct-join-row">
       <div class="order-title vux-1px-b">
         <flexbox>
           <flexbox-item :span="1/4" class="order-logo-box">
@@ -324,6 +324,14 @@
         </x-input>
       </div>
     </confirm>
+    <confirm v-model="showExistOrder" title="您存在未支付拼团" confirm-text="去支付" cancel-text="取消订单" class="dialog-exist-order" :close-on-confirm="false" @on-confirm="payExistOrder(existOrder.orderId)" @on-cancel="cancelExistOrder(existOrder.orderId)">
+      <div slot="default" class="dialog-exist-order-body">
+        {{ existOrder.productName }}
+      </div>
+    </confirm>
+    <x-dialog v-model="showShareBox" class="dialog-share" hide-on-blur :dialog-style="{width: '100%', maxWidth: '100%', backgroundColor: 'transparent'}">
+      <div class="img-box" @click="showShareBox = false"></div>
+    </x-dialog>
   </div>
 </template>
 
@@ -345,6 +353,7 @@ import {
   Confirm,
   XInput,
   Countdown,
+  XDialog,
   dateFormat
 } from 'vux'
 
@@ -364,7 +373,8 @@ export default {
     Popup,
     Confirm,
     XInput,
-    Countdown
+    Countdown,
+    XDialog
   },
   data () {
     return {
@@ -398,7 +408,10 @@ export default {
       disableGraphCode: false,
       actEntityId: '',
       group: {},
-      isUserLogin: false
+      isUserLogin: false,
+      showShareBox: false,
+      existOrder: {},
+      showExistOrder: false
     }
   },
   computed: {
@@ -436,17 +449,13 @@ export default {
       'smsLogin',
       'getPintuanProduct',
       'getPintuanDetails',
+      'getPintuanExist',
+      'cancelPintuanOrder',
       'isLogin'
     ]),
     onTabClick: function (index) {
       this.tabIndex = index
       console.log(index)
-    },
-    success: function (e) {
-      console.log(e)
-    },
-    error: function (e) {
-      console.log(e)
     },
     orderPopupShow (e) {
       console.log(e)
@@ -611,11 +620,38 @@ export default {
       } else {
         this.loginDialog = true
       }
+    },
+    payExistOrder (orderId) {
+      window.location.href = 'http://m.huijiacar.com/wlwc/wx-pay.html?orderId=' + orderId + '&wxpayReturnUri=' + encodeURIComponent('https://m.huijiacar.com/vue-mobile/#/pintuan/my')
+    },
+    cancelExistOrder (orderId) {
+      const z = this
+      z.cancelPintuanOrder({
+        orderId: orderId
+      }).then(function () {
+        z.showToast({
+          type: 'success',
+          text: '该订单已取消'
+        })
+        z.existOrder = {}
+      })
+    },
+    checkExistOrder () {
+      const z = this
+      z.getPintuanExist({
+        actEntityId: z.actEntityId
+      }).then(function (data) {
+        z.existOrder = data
+        if (data.orderId) {
+          z.showExistOrder = true
+        }
+      })
     }
   },
   created () {
     const z = this
-    z.actEntityId = z.$route.query && z.$route.query.actEntityId
+    console.log(z.$route)
+    z.actEntityId = z.$route.query.actEntityId
     console.log(z.actEntityId)
     z.getPintuanProduct({
       activityId: 1
@@ -629,6 +665,9 @@ export default {
     }
     z.isLogin().then(function (status) {
       z.isUserLogin = status
+      if (status) {
+        z.checkExistOrder()
+      }
     })
   },
   mounted () {
@@ -952,6 +991,23 @@ export default {
     border-radius: 0;
     color: transparent;
     background-color: transparent;
+  }
+}
+.dialog-exist-order {
+  .dialog-exist-order-body {
+    font-size: 1.25rem;
+    color: #333;
+    font-weight: bold;
+  }
+}
+.dialog-share {
+  .img-box {
+    height: 300px;
+    background-size: contain;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    background-image: url(~static/pintuan/share@2x.png);
   }
 }
 </style>

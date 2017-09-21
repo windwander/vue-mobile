@@ -28,6 +28,9 @@ export const actions = {
       })
     })
   },
+  /**
+   * 短信登录
+   */
   smsLogin ({ commit, state }, data) {
     return new Promise(function (resolve, reject) {
       smsLogin(commit, state, data).then(function (status) {
@@ -153,7 +156,7 @@ export const actions = {
         params: data
       }).then(res => {
         console.log(res.data)
-        resolve()
+        resolve(res.data)
       }).catch(error => {
         oneError(commit, state, error, '查询是否已经参加当前的拼团')
         reject(error)

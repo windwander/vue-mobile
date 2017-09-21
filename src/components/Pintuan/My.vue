@@ -36,53 +36,19 @@
               15分钟未付款的订单将自动关闭
             </div> -->
           </flexbox-item>
-          <flexbox-item :span="3/10" class="btn-wrapper">
-            <x-button mini plain type="primary" class="btn" action-type="button" @click.native="clickBtn(order)">{{ getStatusBtnName(order.allStatus) }}</x-button>
+          <flexbox-item v-if="order.allStatus === '2'" class="btn-wrapper">
+            <x-button mini plain type="default" class="btn-default" action-type="button" @click.native="cancelOrder(order.orderId)">取消订单</x-button>
+          </flexbox-item>
+          <flexbox-item class="btn-wrapper">
+            <x-button mini plain type="primary" class="btn-primary" action-type="button" @click.native="clickBtn(order)">{{ getStatusBtnName(order.allStatus) }}</x-button>
           </flexbox-item>
         </flexbox>
       </div>
     </div>
-    <!-- <div class="list-row">
-      <div class="order-info">未付款</div>
-      <div class="order-title vux-1px-t vux-1px-b">
-        <flexbox>
-          <flexbox-item :span="1/4" class="order-logo-box">
-            <img src="../../../static/pintuan/order-logo@2x.png" alt="商品图标" class="order-logo">
-          </flexbox-item>
-          <flexbox-item :span="3/4">
-            <div class="title-text">
-              <div class="product-text">
-                <span>{{carTypeName}}</span>
-                <span v-if="carInner" class="product-inner"> + 内饰清洗</span>
-              </div>
-              <div class="price">
-                实际支付：
-                <span class="number">20.00</span>
-                元
-              </div>
-            </div>
-          </flexbox-item>
-        </flexbox>
-      </div>
-      <div class="order-bottom">
-        <flexbox>
-          <flexbox-item>
-            <div class="action-info">
-              拼团剩余时间：
-              <clocker time="2017-09-21" format="%H : %M : %S">
-              </clocker>
-            </div>
-          </flexbox-item>
-          <flexbox-item :span="3/10" class="btn-wrapper">
-            <x-button mini plain type="primary" class="btn" action-type="button">去支付</x-button>
-          </flexbox-item>
-        </flexbox>
-      </div>
-    </div> -->
   </div>
 </template>
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 import sha1 from 'crypto-js/sha1'
 import {
   Tab,
@@ -114,12 +80,16 @@ export default {
     ])
   },
   methods: {
+    ...mapMutations([
+      'showToast'
+    ]),
     ...mapActions([
       'getPintuanMyGroups',
       'isLogin',
       'getWxTicket',
       'getWxOpenId',
-      'h5pay'
+      'h5pay',
+      'cancelPintuanOrder'
     ]),
     getStatusName (status) {
       return this.statusNames[status]
@@ -132,7 +102,10 @@ export default {
       const z = this
       if (order.allStatus === '0') { // 再次拼团
         z.$router.push({
-          name: 'PintuanProduct'
+          name: 'PintuanProduct',
+          query: {
+            actEntityId: 2361515250058240
+          }
         })
       } else if (order.allStatus === '1') { // 立即使用
         console.log('立即使用')
@@ -149,6 +122,18 @@ export default {
           name: 'PintuanProduct'
         })
       }
+    },
+    cancelOrder (orderId) {
+      const z = this
+      z.cancelPintuanOrder({
+        orderId: orderId
+      }).then(function () {
+        z.showToast({
+          type: 'success',
+          text: '该订单已取消'
+        })
+        z.getPintuanMyGroups()
+      })
     },
     createPay (orderId) {
       const z = this
@@ -303,7 +288,7 @@ export default {
     .btn-wrapper {
       text-align: right;
     }
-    .btn {
+    .btn-primary {
       color: @theme-color;
       border-color: @theme-color;
     }
