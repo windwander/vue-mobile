@@ -88,6 +88,7 @@ export default {
     },
     formatDate (time) {
       console.log(time)
+      alert(time)
       return dateFormat(time, 'YYYY-MM-DD')
     },
     randomStr (len) {
