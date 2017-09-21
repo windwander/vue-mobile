@@ -140,7 +140,8 @@ export default {
         //   name: 'PintuanProduct'
         // })
       } else if (order.allStatus === '2') { // 去支付
-        z.createPay(order.orderId)
+        // z.createPay(order.orderId)
+        window.location.href = 'https://m.huijiacar.com/wlwc/wx-pay.html?orderId=' + order.orderId + '&wxpayReturnUri=' + encodeURIComponent('https://m.huijiacar.com/vue-mobile/#/pintuan/my')
       } else if (order.allStatus === '3') { // 邀请好友
         console.log('邀请好友')
       } else if (order.allStatus === '4') { // 重新拼团
@@ -249,16 +250,16 @@ export default {
     })
   },
   mounted () {
-    const z = this
-    z.initWxTicket()
-    let code = querystring.parse().code
-    if (code) {
-      z.getWxOpenId({
-        code: code
-      }).then(function (openId) {
-        z.openId = openId
-      })
-    }
+    // const z = this
+    // z.initWxTicket()
+    // let code = querystring.parse().code
+    // if (code) {
+    //   z.getWxOpenId({
+    //     code: code
+    //   }).then(function (openId) {
+    //     z.openId = openId
+    //   })
+    // }
   }
 }
 </script>

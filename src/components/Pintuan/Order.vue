@@ -209,7 +209,8 @@ export default {
         actEntityId: z.orderInfo.actEntityId || '',
         activityId: 1
       }).then(function (orderId) {
-        z.createPay(orderId)
+        // z.createPay(orderId)
+        window.location.href = 'https://m.huijiacar.com/wlwc/wx-pay.html?orderId=' + orderId + '&wxpayReturnUri=' + encodeURIComponent('https://m.huijiacar.com/vue-mobile/#/pintuan/my')
       })
     },
     createPay (orderId) {
@@ -312,26 +313,26 @@ export default {
     if (pintuanOrderInfo) {
       z.orderInfo = JSON.parse(pintuanOrderInfo)
     } else {
-      // z.$router.push({
-      //   name: 'PintuanProduct'
-      // })
+      z.$router.push({
+        name: 'PintuanProduct'
+      })
     }
     z.isLogin().then(function (status) {
       z.isUserLogin = status
     })
   },
   mounted () {
-    const z = this
+    // const z = this
     console.log(this.orderInfo)
-    z.initWxTicket()
-    let code = querystring.parse().code
-    if (code) {
-      z.getWxOpenId({
-        code: code
-      }).then(function (openId) {
-        z.openId = openId
-      })
-    }
+    // z.initWxTicket()
+    // let code = querystring.parse().code
+    // if (code) {
+    //   z.getWxOpenId({
+    //     code: code
+    //   }).then(function (openId) {
+    //     z.openId = openId
+    //   })
+    // }
   }
 }
 </script>
