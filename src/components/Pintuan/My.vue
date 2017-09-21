@@ -258,8 +258,6 @@ export default {
       }).then(function (openId) {
         z.openId = openId
       })
-    } else {
-
     }
   }
 }
