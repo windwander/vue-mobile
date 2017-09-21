@@ -36,7 +36,7 @@
         <div class="order-bottom">
           <flexbox>
             <flexbox-item>
-              <div class="action-info">
+              <div v-if="order.allStatus === '3'" class="action-info">
                 剩余：
                 <clocker :time="formatDate(new Date(new Date(order.startDateTime).getTime() + (order.entityTimeOut * 60 * 60 * 1000)))" format="%H : %M : %S">
                 </clocker>
@@ -107,6 +107,7 @@ export default {
       return this.statusBtnNames[status]
     },
     formatDate (time) {
+      console.log(time)
       return dateFormat(time, 'YYYY-MM-DD')
     },
     clickBtn (order) {
