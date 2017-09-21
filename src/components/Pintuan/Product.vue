@@ -713,6 +713,7 @@ export default {
       })
     },
     initShareInfo (actEntityId) {
+      const z = this
       const shareConfig = {
         title: '慧驾邀请您参加洗车拼团',
         desc: '上门洗车3人拼团15元起，拥有三项自主专利，温和去污不伤漆，超柔洁净不留痕',
@@ -723,15 +724,15 @@ export default {
         cancel: function () {
         }
       }
-      this.$wechat.ready(function () {
-        this.$wechat.showMenuItems({
+      z.$wechat.ready(function () {
+        z.$wechat.showMenuItems({
           menuList: [
             'menuItem:share:appMessage',
             'menuItem:share:timeline'
           ]
         })
-        this.$wechat.onMenuShareTimeline(shareConfig)
-        this.$wechat.onMenuShareAppMessage(shareConfig)
+        z.$wechat.onMenuShareTimeline(shareConfig)
+        z.$wechat.onMenuShareAppMessage(shareConfig)
       })
     }
   },
