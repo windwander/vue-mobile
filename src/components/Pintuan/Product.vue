@@ -412,7 +412,9 @@ export default {
       isUserLogin: false,
       showShareBox: false,
       existOrder: {},
-      showExistOrder: false
+      showExistOrder: false,
+      appId: '',
+      ticket: ''
     }
   },
   computed: {
@@ -663,6 +665,7 @@ export default {
         z.appId = t.appid
         z.ticket = t.ticket
         let isMicroMessenger = navigator.userAgent.toLowerCase().indexOf('MicroMessenger'.toLowerCase()) > -1
+        console.log(this.$route)
         if (isMicroMessenger && !this.$route.query.code) {
           let redirUri = encodeURIComponent(window.location.href)
           window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + z.appId + '&redirect_uri=' + redirUri + '&response_type=code&scope=snsapi_base&state=1#wechat_redirect'
@@ -676,6 +679,7 @@ export default {
       })
     },
     initWxConfig () {
+      console.log(this.$route)
       const z = this
       let noncestr = z.randomStr(16)
       let timestamp = new Date().getTime().toString().substr(0, 10)
