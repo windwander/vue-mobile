@@ -6,6 +6,7 @@ import PintuanProduct from '@/components/Pintuan/Product'
 import PintuanOrder from '@/components/Pintuan/Order'
 import PintuanList from '@/components/Pintuan/List'
 import PintuanMy from '@/components/Pintuan/My'
+import PintuanIntroduce from '@/components/Pintuan/Introduce'
 
 Vue.use(Router)
 
@@ -45,6 +46,13 @@ var router = new Router({
       component: PintuanMy,
       meta: {
         title: '我的拼团'
+      }
+    }, {
+      path: '/pintuan/introduce',
+      name: 'PintuanIntroduce',
+      component: PintuanIntroduce,
+      meta: {
+        title: '使用说明'
       }
     }
   ]
