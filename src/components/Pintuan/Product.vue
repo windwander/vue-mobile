@@ -46,9 +46,9 @@
           <img class="avatar" v-for="(url, index) in group.picturl" :key="index" :src="url || '~static/pintuan/avatar-default@2x.png'" alt="用户头像'" />
         </flexbox-item>
         <flexbox-item :class="{'inner-center': group.groupNowMember >= group.groupRequireMember}">
-          <x-button v-if="group.isjoin === '1'" mini plain type="primary" class="btn" action-type="button" @click.native="showShareBox = true">邀请好友</x-button>
-          <x-button v-else-if="group.groupNowMember < group.groupRequireMember" mini plain type="primary" class="btn" action-type="button" @click.native="clickJoin(group)">直接参团</x-button>
-          <x-button v-else mini plain type="warn" disabled action-type="button">团购完成</x-button>
+          <x-button v-if="group.groupNowMember >= group.groupRequireMember" mini plain type="warn" disabled action-type="button">团购完成</x-button>
+          <x-button v-else-if="group.isjoin === '0'" mini plain type="primary" class="btn" action-type="button" @click.native="clickJoin(group)">直接参团</x-button>
+          <x-button v-else mini plain type="primary" class="btn" action-type="button" @click.native="showShareBox = true">邀请好友</x-button>
         </flexbox-item>
       </flexbox>
     </div>
