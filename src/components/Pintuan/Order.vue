@@ -302,8 +302,13 @@ export default {
         nonceStr: noncestr,
         signature: signature,
         jsApiList: [
-          'hideOptionMenu'
+          'hideOptionMenu',
+          'hideAllNonBaseMenuItem'
         ]
+      })
+      z.$wechat.ready(function () {
+        z.$wechat.hideOptionMenu()
+        z.$wechat.hideAllNonBaseMenuItem()
       })
       z.$wechat.error(function (res) {
         console.log(res)
@@ -312,20 +317,6 @@ export default {
           text: '微信权限验证配置失败'
         })
       })
-    },
-    initShareInfo (link) {
-      const shareConfig = {
-        title: '慧驾邀请您参加洗车拼团',
-        desc: '上门洗车3人拼团15元起，拥有三项自主专利，温和去污不伤漆，超柔洁净不留痕',
-        link: link,
-        imgUrl: 'https://m.huijiacar.com/vue-mobile/static/pintuan/share-logo.png',
-        success: function () {
-        },
-        cancel: function () {
-        }
-      }
-      this.$wechat.onMenuShareTimeline(shareConfig)
-      this.$wechat.onMenuShareAppMessage(shareConfig)
     }
   },
   created () {
@@ -341,11 +332,11 @@ export default {
     z.isLogin().then(function (status) {
       z.isUserLogin = status
     })
+    z.initWxTicket()
   },
   mounted () {
     // const z = this
     console.log(this.orderInfo)
-    // z.initWxTicket()
     // let code = querystring.parse().code
     // if (code) {
     //   z.getWxOpenId({

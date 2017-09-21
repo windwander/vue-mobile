@@ -32,6 +32,7 @@
 </template>
 <script>
 import { mapState, mapActions } from 'vuex'
+import sha1 from 'crypto-js/sha1'
 import {
   Tab,
   TabItem,
@@ -39,7 +40,8 @@ import {
   FlexboxItem,
   Clocker,
   XButton,
-  dateFormat
+  dateFormat,
+  querystring
 } from 'vux'
 export default {
   components: {
@@ -62,7 +64,9 @@ export default {
   },
   methods: {
     ...mapActions([
-      'getPintuanAllGroup'
+      'getPintuanAllGroup',
+      'getWxTicket',
+      'getWxOpenId'
     ]),
     clickJoin (group) {
       this.$router.push({
@@ -84,6 +88,64 @@ export default {
     },
     formatDate (time) {
       return dateFormat(time, 'YYYY-MM-DD')
+    },
+    randomStr (len) {
+      len = len || 32
+      const chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678' // 默认去掉了容易混淆的字符oOLl, 9gq, Vv, Uu, I1
+      let maxPos = chars.length
+      let pwd = ''
+      for (let i = 0; i < len; i++) {
+        pwd += chars.charAt(Math.floor(Math.random() * maxPos))
+      }
+      return pwd
+    },
+    initWxTicket () {
+      const z = this
+      z.getWxTicket().then(function (t) {
+        z.appId = t.appid
+        z.ticket = t.ticket
+        let isMicroMessenger = navigator.userAgent.toLowerCase().indexOf('MicroMessenger'.toLowerCase()) > -1
+        if (isMicroMessenger && !querystring.parse().code) {
+          let redirUri = encodeURIComponent(window.location.href)
+          window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + z.appId + '&redirect_uri=' + redirUri + '&response_type=code&scope=snsapi_base&state=1#wechat_redirect'
+        } else {
+          z.initWxConfig()
+        }
+        console.log(t)
+      }).catch(function () {
+        // 清除失效的微信code
+        location.search = ''
+      })
+    },
+    initWxConfig () {
+      const z = this
+      let noncestr = z.randomStr(16)
+      let timestamp = new Date().getTime().toString().substr(0, 10)
+      let url = decodeURIComponent(location.href).split('#')[0]
+      let signStr = 'jsapi_ticket=' + z.ticket + '&noncestr=' + noncestr + '&timestamp=' + timestamp + '&url=' + url
+      let signature = sha1(signStr).toString()
+      z.$wechat.config({
+        debug: true, // 开发者工具显示详情
+        appId: z.appId,
+        timestamp: timestamp,
+        nonceStr: noncestr,
+        signature: signature,
+        jsApiList: [
+          'hideOptionMenu',
+          'hideAllNonBaseMenuItem'
+        ]
+      })
+      z.$wechat.ready(function () {
+        z.$wechat.hideOptionMenu()
+        z.$wechat.hideAllNonBaseMenuItem()
+      })
+      z.$wechat.error(function (res) {
+        console.log(res)
+        z.showToast({
+          type: 'warn',
+          text: '微信权限验证配置失败'
+        })
+      })
     }
   },
   created () {
@@ -93,6 +155,7 @@ export default {
     }).then(function (allGroups) {
       // z.allGroups = allGroups
     })
+    z.initWxTicket()
   },
   mounted () {
     console.log(this.pintuanAllGroup)

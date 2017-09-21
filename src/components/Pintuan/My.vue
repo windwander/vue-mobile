@@ -216,8 +216,13 @@ export default {
         nonceStr: noncestr,
         signature: signature,
         jsApiList: [
-          'chooseWXPay'
+          'hideOptionMenu',
+          'hideAllNonBaseMenuItem'
         ]
+      })
+      z.$wechat.ready(function () {
+        z.$wechat.hideOptionMenu()
+        z.$wechat.hideAllNonBaseMenuItem()
       })
       z.$wechat.error(function (res) {
         console.log(res)
@@ -237,13 +242,11 @@ export default {
         })
       }
     })
-    z.getPintuanMyGroups({
-      // status: 1
-    })
+    z.getPintuanMyGroups()
+    z.initWxTicket()
   },
   mounted () {
     // const z = this
-    // z.initWxTicket()
     // let code = querystring.parse().code
     // if (code) {
     //   z.getWxOpenId({

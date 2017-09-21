@@ -710,11 +710,11 @@ export default {
         })
       })
     },
-    initShareInfo (link) {
+    initShareInfo (actEntityId) {
       const shareConfig = {
         title: '慧驾邀请您参加洗车拼团',
         desc: '上门洗车3人拼团15元起，拥有三项自主专利，温和去污不伤漆，超柔洁净不留痕',
-        link: link,
+        link: 'https://m.huijiacar.com/vue-mobile/#/pintuan/product?actEntityId=' + actEntityId,
         imgUrl: 'https://m.huijiacar.com/vue-mobile/static/pintuan/share-logo.png',
         success: function () {
         },
@@ -764,9 +764,7 @@ export default {
       z.clickOrderPopupButton(true)
     }
     if (z.$route.query.actEntityId) {
-      let link = z.$route.fullPath
-      console.log(link)
-      z.initShareInfo(link)
+      z.initShareInfo(z.actEntityId)
     }
   }
 }
