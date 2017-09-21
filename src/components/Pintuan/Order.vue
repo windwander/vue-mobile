@@ -197,6 +197,9 @@ export default {
             z.payLoading = false
             z.createOrder()
           }
+        }).catch(function () {
+          z.hideLoading()
+          z.payLoading = false
         })
       }
     },
@@ -302,12 +305,10 @@ export default {
         nonceStr: noncestr,
         signature: signature,
         jsApiList: [
-          'hideOptionMenu',
           'hideAllNonBaseMenuItem'
         ]
       })
       z.$wechat.ready(function () {
-        z.$wechat.hideOptionMenu()
         z.$wechat.hideAllNonBaseMenuItem()
       })
       z.$wechat.error(function (res) {

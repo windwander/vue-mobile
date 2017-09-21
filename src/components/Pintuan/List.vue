@@ -131,12 +131,10 @@ export default {
         nonceStr: noncestr,
         signature: signature,
         jsApiList: [
-          'hideOptionMenu',
           'hideAllNonBaseMenuItem'
         ]
       })
       z.$wechat.ready(function () {
-        z.$wechat.hideOptionMenu()
         z.$wechat.hideAllNonBaseMenuItem()
       })
       z.$wechat.error(function (res) {

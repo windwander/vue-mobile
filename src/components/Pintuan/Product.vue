@@ -693,16 +693,11 @@ export default {
         nonceStr: noncestr,
         signature: signature,
         jsApiList: [
-          'hideOptionMenu',
           'showMenuItems',
           'hideAllNonBaseMenuItem',
           'onMenuShareTimeline',
           'onMenuShareAppMessage'
         ]
-      })
-      z.$wechat.ready(function () {
-        z.$wechat.hideOptionMenu()
-        z.$wechat.hideAllNonBaseMenuItem()
       })
       z.$wechat.error(function (res) {
         console.log(res)
@@ -769,6 +764,10 @@ export default {
     }
     if (z.$route.query.actEntityId) {
       z.initShareInfo(z.actEntityId)
+    } else {
+      z.$wechat.ready(function () {
+        z.$wechat.hideAllNonBaseMenuItem()
+      })
     }
   }
 }

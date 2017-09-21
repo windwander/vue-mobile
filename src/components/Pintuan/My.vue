@@ -216,7 +216,6 @@ export default {
         nonceStr: noncestr,
         signature: signature,
         jsApiList: [
-          'hideOptionMenu',
           'hideAllNonBaseMenuItem'
         ]
       })
