@@ -675,7 +675,7 @@ export default {
         console.log(t)
       }).catch(function () {
         // 清除失效的微信code
-        location.search = ''
+        // location.search = ''
       })
     },
     initWxConfig () {
@@ -724,7 +724,7 @@ export default {
       console.log(shareConfig)
       this.$wechat.onMenuShareTimeline(shareConfig)
       this.$wechat.onMenuShareAppMessage(shareConfig)
-      this.showMenuItems({
+      this.$wechat.showMenuItems({
         menuList: [
           'menuItem:share:appMessage',
           'menuItem:share:timeline'
