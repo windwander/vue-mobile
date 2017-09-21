@@ -87,13 +87,10 @@ export default {
       })
     },
     formatDate (startDateTime, entityTimeOut) {
-      alert(dateFormat(startDateTime, 'YYYY-MM-DD'))
-      // alert(startDateTime)
-      // alert(entityTimeOut)
-      // alert(new Date(startDateTime).getTime())
-      // alert(entityTimeOut * 60 * 60 * 1000)
-      // alert((new Date(startDateTime).getTime()) + (entityTimeOut * 60 * 60 * 1000))
-      return dateFormat(startDateTime, 'YYYY-MM-DD')
+      let start = new Date(dateFormat(startDateTime, 'YYYY-MM-DDTHH:mm:ss')).getTime()
+      let timeout = entityTimeOut * 60 * 60 * 1000
+      let end = start + timeout
+      return dateFormat(end, 'YYYY-MM-DD HH:mm:ss')
     },
     randomStr (len) {
       len = len || 32
