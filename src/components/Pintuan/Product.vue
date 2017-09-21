@@ -687,7 +687,7 @@ export default {
       let signStr = 'jsapi_ticket=' + z.ticket + '&noncestr=' + noncestr + '&timestamp=' + timestamp + '&url=' + url
       let signature = sha1(signStr).toString()
       z.$wechat.config({
-        debug: false, // 开发者工具显示详情
+        debug: true, // 开发者工具显示详情
         appId: z.appId,
         timestamp: timestamp,
         nonceStr: noncestr,
@@ -723,7 +723,6 @@ export default {
         cancel: function () {
         }
       }
-      console.log(shareConfig)
       this.$wechat.showMenuItems({
         menuList: [
           'menuItem:share:appMessage',
@@ -766,6 +765,7 @@ export default {
       z.clickOrderPopupButton(true)
     }
     if (z.$route.query.actEntityId) {
+      console.log('++++++++++++++++++')
       z.initShareInfo(z.actEntityId)
     }
   }
