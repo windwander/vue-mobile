@@ -15,7 +15,7 @@
           </div>
           <div class="countdown">
             剩余：
-            <clocker v-if="group.startDateTime" :time="formatDate(new Date(group.startDateTime).getTime() + (group.entityTimeOut * 60 * 60 * 1000))" format="%H : %M : %S">
+            <clocker v-if="group.startDateTime" :time="formatDate(group.startDateTime, group.entityTimeOut)" format="%H : %M : %S">
             </clocker>
           </div>
         </flexbox-item>
@@ -86,10 +86,13 @@ export default {
         }
       })
     },
-    formatDate (time) {
-      console.log(time)
-      alert(time)
-      return dateFormat(time, 'YYYY-MM-DD')
+    formatDate (startDateTime, entityTimeOut) {
+      alert(startDateTime)
+      alert(entityTimeOut)
+      alert(new Date(startDateTime).getTime())
+      alert(entityTimeOut * 60 * 60 * 1000)
+      alert((new Date(startDateTime).getTime()) + (entityTimeOut * 60 * 60 * 1000))
+      return dateFormat(startDateTime, 'YYYY-MM-DD')
     },
     randomStr (len) {
       len = len || 32
