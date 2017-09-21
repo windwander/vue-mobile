@@ -87,10 +87,8 @@ export default {
       })
     },
     formatDate (startDateTime, entityTimeOut) {
-      let start = new Date(dateFormat(startDateTime, 'YYYY-MM-DDTHH:mm:ss')).getTime()
-      let timeout = entityTimeOut * 60 * 60 * 1000
-      let end = start + timeout
-      return dateFormat(end, 'YYYY-MM-DD HH:mm:ss')
+      const endTime = startDateTime + entityTimeOut * 60 * 60 * 1000
+      return dateFormat(endTime, 'YYYY-MM-DD HH:mm:ss')
     },
     randomStr (len) {
       len = len || 32
