@@ -723,14 +723,16 @@ export default {
         cancel: function () {
         }
       }
-      this.$wechat.showMenuItems({
-        menuList: [
-          'menuItem:share:appMessage',
-          'menuItem:share:timeline'
-        ]
+      this.$wechat.ready(function () {
+        this.$wechat.showMenuItems({
+          menuList: [
+            'menuItem:share:appMessage',
+            'menuItem:share:timeline'
+          ]
+        })
+        this.$wechat.onMenuShareTimeline(shareConfig)
+        this.$wechat.onMenuShareAppMessage(shareConfig)
       })
-      this.$wechat.onMenuShareTimeline(shareConfig)
-      this.$wechat.onMenuShareAppMessage(shareConfig)
     }
   },
   created () {
@@ -765,7 +767,6 @@ export default {
       z.clickOrderPopupButton(true)
     }
     if (z.$route.query.actEntityId) {
-      console.log('++++++++++++++++++')
       z.initShareInfo(z.actEntityId)
     }
   }
