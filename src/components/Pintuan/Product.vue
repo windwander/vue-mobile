@@ -724,14 +724,14 @@ export default {
         }
       }
       console.log(shareConfig)
-      this.$wechat.onMenuShareTimeline(shareConfig)
-      this.$wechat.onMenuShareAppMessage(shareConfig)
       this.$wechat.showMenuItems({
         menuList: [
           'menuItem:share:appMessage',
           'menuItem:share:timeline'
         ]
       })
+      this.$wechat.onMenuShareTimeline(shareConfig)
+      this.$wechat.onMenuShareAppMessage(shareConfig)
     }
   },
   created () {
