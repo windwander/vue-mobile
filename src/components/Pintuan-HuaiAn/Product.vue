@@ -94,7 +94,7 @@
       </div>
     </div> -->
     <div class="qr-row">
-      <img class="img" src="~static/pintuan/qr-row@2x.png" alt="公众号二维码">
+      <img class="img" src="~static/pintuan/qr-row-ha@2x.png" alt="公众号二维码">
     </div>
     <tab v-model="tabIndex">
       <tab-item selected @on-item-click="onTabClick">商品详情</tab-item>

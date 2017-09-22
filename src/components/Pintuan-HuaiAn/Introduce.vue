@@ -25,7 +25,7 @@
       </ul>
     </div>
     <div class="qr-img">
-      <img src="~static/pintuan/qr-gzh@2x.png" class="qr-gzh" />
+      <img src="~static/pintuan/qr-ha@2x.png" class="qr-gzh" />
       <p>扫码关注公众号</p>
     </div>
     <div class="copy">最终解释权归慧驾所有</div>
