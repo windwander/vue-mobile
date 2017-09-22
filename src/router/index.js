@@ -7,6 +7,11 @@ import PintuanOrder from '@/components/Pintuan/Order'
 import PintuanList from '@/components/Pintuan/List'
 import PintuanMy from '@/components/Pintuan/My'
 import PintuanIntroduce from '@/components/Pintuan/Introduce'
+import PintuanProductHa from '@/components/Pintuan-HuaiAn/Product'
+import PintuanOrderHa from '@/components/Pintuan-HuaiAn/Order'
+import PintuanListHa from '@/components/Pintuan-HuaiAn/List'
+import PintuanMyHa from '@/components/Pintuan-HuaiAn/My'
+import PintuanIntroduceHa from '@/components/Pintuan-HuaiAn/Introduce'
 
 Vue.use(Router)
 
@@ -55,6 +60,46 @@ var router = new Router({
       path: '/pintuan/introduce',
       name: 'PintuanIntroduce',
       component: PintuanIntroduce,
+      meta: {
+        title: '使用说明',
+        scrollToTop: true
+      }
+    }, {
+      path: '/pintuan-ha/product',
+      name: 'PintuanProductHa',
+      component: PintuanProductHa,
+      meta: {
+        title: '商品详情页',
+        scrollToTop: true
+      }
+    }, {
+      path: '/pintuan-ha/order',
+      name: 'PintuanOrderHa',
+      component: PintuanOrderHa,
+      meta: {
+        title: '确认订单',
+        scrollToTop: true
+      }
+    }, {
+      path: '/pintuan-ha/list',
+      name: 'PintuanListHa',
+      component: PintuanListHa,
+      meta: {
+        title: '全部拼团',
+        scrollToTop: true
+      }
+    }, {
+      path: '/pintuan-ha/my',
+      name: 'PintuanMyHa',
+      component: PintuanMyHa,
+      meta: {
+        title: '我的拼团',
+        scrollToTop: true
+      }
+    }, {
+      path: '/pintuan-ha/introduce',
+      name: 'PintuanIntroduceHa',
+      component: PintuanIntroduceHa,
       meta: {
         title: '使用说明',
         scrollToTop: true

@@ -25,7 +25,7 @@
       <div v-if="actEntityId && group.entityTimeOut" class="pintuan-all">
         <span v-if="group.groupNowMember < group.groupRequireMember">想买了？可直接参与下面的团</span>
         <span v-else>&nbsp;</span>
-        <router-link :to="{ name: 'PintuanList' }" class="link">全部拼团></router-link>
+        <router-link :to="{ name: 'PintuanListHa' }" class="link">全部拼团></router-link>
       </div>
     </div>
     <div v-if="actEntityId && group.entityTimeOut" class="invite-row">
@@ -538,7 +538,7 @@ export default {
         sessionStorage.setItem('pintuanOrderInfo', JSON.stringify(allOrderInfo))
         z.setOrderInfo()
         z.$router.push({
-          name: 'PintuanOrder',
+          name: 'PintuanOrderHa',
           query: z.$router.query
         })
       }
@@ -606,7 +606,7 @@ export default {
             z.loginDialog = false
             z.loginLoading = false
             z.$router.push({
-              name: 'PintuanMy'
+              name: 'PintuanMyHa'
             })
           }
         })
@@ -623,7 +623,7 @@ export default {
     clickMyBtn () {
       if (this.isUserLogin) {
         this.$router.push({
-          name: 'PintuanMy'
+          name: 'PintuanMyHa'
         })
       } else {
         this.loginDialog = true
@@ -745,7 +745,7 @@ export default {
     z.actEntityId = z.$route.query.actEntityId
     console.log(z.actEntityId)
     z.getPintuanProduct({
-      activityId: 1
+      activityId: 2 // 淮安
     })
     if (z.actEntityId) {
       z.getPintuanDetails({

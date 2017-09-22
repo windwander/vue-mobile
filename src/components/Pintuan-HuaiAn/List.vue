@@ -32,7 +32,7 @@
     </div>
     <div v-else class="no-data">
       <span>当前没有进行中的拼团</span>
-      <!-- <x-button type="primary" class="btn" action-type="button" @click.native="clickNewGroup">发起拼团</x-button> -->
+      <x-button type="primary" class="btn" action-type="button" @click.native="clickNewGroup">发起拼团</x-button>
     </div>
   </div>
 </template>
@@ -76,7 +76,7 @@ export default {
     ]),
     clickJoin (group) {
       this.$router.push({
-        name: 'PintuanProduct',
+        name: 'PintuanProductHa',
         query: {
           actEntityId: group.actEntityId,
           autoJoin: true
@@ -86,7 +86,7 @@ export default {
     clickInvite (group) {
       sessionStorage.setItem('showShareBox', true)
       this.$router.push({
-        name: 'PintuanProduct',
+        name: 'PintuanProductHa',
         query: {
           actEntityId: group.actEntityId
         }
@@ -94,7 +94,7 @@ export default {
     },
     clickNewGroup () {
       this.$router.push({
-        name: 'PintuanProduct'
+        name: 'PintuanProductHa'
       })
     },
     formatDate (startDateTime, entityTimeOut) {

@@ -115,12 +115,12 @@ export default {
       const z = this
       if (order.allStatus === '0') { // 再次拼团
         z.$router.push({
-          name: 'PintuanProduct'
+          name: 'PintuanProductHa'
         })
       } else if (order.allStatus === '1') { // 立即使用
         console.log('立即使用')
         z.$router.push({
-          name: 'PintuanIntroduce'
+          name: 'PintuanIntroduceHa'
         })
       } else if (order.allStatus === '2') { // 去支付
         // z.createPay(order.orderId)
@@ -129,14 +129,14 @@ export default {
         console.log('邀请好友')
         sessionStorage.setItem('showShareBox', true)
         z.$router.push({
-          name: 'PintuanProduct',
+          name: 'PintuanProductHa',
           query: {
             actEntityId: order.actEntityId
           }
         })
       } else if (order.allStatus === '4') { // 重新拼团
         z.$router.push({
-          name: 'PintuanProduct'
+          name: 'PintuanProductHa'
         })
       }
     },
@@ -178,7 +178,7 @@ export default {
             // 支付成功
             console.log(res)
             this.$router.push({
-              name: 'PintuanMy'
+              name: 'PintuanMyHa'
             })
           }
         })
@@ -247,7 +247,7 @@ export default {
     z.isLogin().then(function (status) {
       if (!status) {
         z.$router.push({
-          name: 'PintuanProduct'
+          name: 'PintuanProductHa'
         })
       }
     })
