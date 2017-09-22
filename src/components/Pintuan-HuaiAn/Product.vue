@@ -384,6 +384,7 @@ export default {
   data () {
     return {
       swiper: [
+        '~static/pintuan/banner-ha.png',
         '~static/pintuan/banner-1.jpg',
         '~static/pintuan/banner-2.jpg',
         '~static/pintuan/banner-3.jpg'
