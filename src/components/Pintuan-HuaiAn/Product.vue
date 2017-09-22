@@ -248,7 +248,7 @@
         </a>
       </flexbox-item>
       <flexbox-item class="bottombar-item">
-      <a href="/wlwc/" class="btn-single">
+      <a href="http://m.huijiacar.com/wlwc/" class="btn-single">
         {{ saleLowPrice }}元起<br/>单独购买
       </a>
       </flexbox-item>
