@@ -32,7 +32,7 @@
     </div>
     <div v-else class="no-data">
       <span>当前没有进行中的拼团</span>
-      <x-button type="primary" class="btn" action-type="button" @click.native="clickNewGroup">发起拼团</x-button>
+      <!-- <x-button type="primary" class="btn" action-type="button" @click.native="clickNewGroup">发起拼团</x-button> -->
     </div>
   </div>
 </template>

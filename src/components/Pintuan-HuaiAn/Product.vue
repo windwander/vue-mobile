@@ -630,7 +630,7 @@ export default {
       }
     },
     payExistOrder (orderId) {
-      window.location.href = 'http://m.huijiacar.com/wlwc/wx-pay.html?orderId=' + orderId + '&wxpayReturnUri=' + encodeURIComponent('https://m.huijiacar.com/vue-mobile/#/pintuan/my')
+      window.location.href = 'http://m.huijiacar.com/wlwc/wx-pay.html?orderId=' + orderId + '&wxpayReturnUri=' + encodeURIComponent('https://m.huijiacar.com/vue-mobile/#/pintuan-ha/my')
     },
     cancelExistOrder (orderId) {
       const z = this
@@ -720,7 +720,7 @@ export default {
       const shareConfig = {
         title: '慧驾邀请您参加洗车拼团',
         desc: '上门洗车3人拼团15元起，拥有三项自主专利，温和去污不伤漆，超柔洁净不留痕',
-        link: 'https://m.huijiacar.com/vue-mobile/#/pintuan/product?actEntityId=' + actEntityId,
+        link: 'https://m.huijiacar.com/vue-mobile/#/pintuan-ha/product?actEntityId=' + actEntityId,
         imgUrl: 'https://m.huijiacar.com/vue-mobile/static/pintuan/share-logo.png',
         success: function () {
         },

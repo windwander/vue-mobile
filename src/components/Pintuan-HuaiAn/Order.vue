@@ -212,11 +212,11 @@ export default {
         saleAmonut: z.orderInfo.salePrice * 100,
         introducerId: '',
         actEntityId: z.orderInfo.actEntityId || '',
-        activityId: 1
+        activityId: 2 // 淮安
       }).then(function (orderId) {
         z.isPaying = false
         // z.createPay(orderId)
-        window.location.href = 'http://m.huijiacar.com/wlwc/wx-pay.html?orderId=' + orderId + '&wxpayReturnUri=' + encodeURIComponent('https://m.huijiacar.com/vue-mobile/#/pintuan/my')
+        window.location.href = 'http://m.huijiacar.com/wlwc/wx-pay.html?orderId=' + orderId + '&wxpayReturnUri=' + encodeURIComponent('https://m.huijiacar.com/vue-mobile/#/pintuan-ha/my')
       }).catch(function () {
         z.isPaying = false
       })
