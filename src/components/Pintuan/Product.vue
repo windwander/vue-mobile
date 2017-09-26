@@ -22,7 +22,7 @@
           份
         </span> -->
       </div>
-      <div v-if="actEntityId && group.entityTimeOut" class="pintuan-all">
+      <div class="pintuan-all">
         <span v-if="group.groupNowMember < group.groupRequireMember">想买了？可直接参与下面的团</span>
         <span v-else>&nbsp;</span>
         <router-link :to="{ name: 'PintuanList' }" class="link">全部拼团></router-link>
@@ -720,7 +720,7 @@ export default {
       const shareConfig = {
         title: '慧驾邀请您参加洗车拼团',
         desc: '上门洗车3人拼团15元起，拥有三项自主专利，温和去污不伤漆，超柔洁净不留痕',
-        link: 'https://m.huijiacar.com/vue-mobile/#/pintuan/product?actEntityId=' + actEntityId,
+        link: 'https://m.huijiacar.com/vue-mobile/#/pintuan/product' + (actEntityId ? ('?actEntityId=' + actEntityId) : ''),
         imgUrl: 'https://m.huijiacar.com/vue-mobile/static/pintuan/share-logo.png',
         success: function () {
         },
@@ -770,13 +770,14 @@ export default {
     if (z.$route.query.autoJoin) {
       z.clickOrderPopupButton(true, true)
     }
-    if (z.$route.query.actEntityId) {
-      z.initShareInfo(z.actEntityId)
-    } else {
-      z.$wechat.ready(function () {
-        z.$wechat.hideAllNonBaseMenuItem()
-      })
-    }
+    // if (z.$route.query.actEntityId) {
+    //   z.initShareInfo(z.actEntityId)
+    // } else {
+    //   z.$wechat.ready(function () {
+    //     z.$wechat.hideAllNonBaseMenuItem()
+    //   })
+    // }
+    z.initShareInfo(z.actEntityId)
   }
 }
 </script>
