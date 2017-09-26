@@ -21,11 +21,11 @@
           <span class="number">1000</span>
           份
         </span> -->
+        <router-link :to="{ name: 'PintuanListHa' }" class="link">全部拼团></router-link>
       </div>
-      <div class="pintuan-all">
+      <div v-if="actEntityId && group.entityTimeOut" class="pintuan-all">
         <span v-if="group.groupNowMember < group.groupRequireMember">想买了？可直接参与下面的团</span>
         <span v-else>&nbsp;</span>
-        <router-link :to="{ name: 'PintuanListHa' }" class="link">全部拼团></router-link>
       </div>
     </div>
     <div v-if="actEntityId && group.entityTimeOut" class="invite-row">
@@ -809,6 +809,11 @@ export default {
       color: @theme-color;
     }
     .sale-amount {
+      float: right;
+      line-height: 1.5;
+      color: @grey-text;
+    }
+    .link {
       float: right;
       line-height: 1.5;
       color: @grey-text;
