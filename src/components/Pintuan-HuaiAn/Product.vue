@@ -720,7 +720,7 @@ export default {
       const z = this
       const shareConfig = {
         title: '慧驾邀请您参加洗车拼团',
-        desc: '上门洗车3人拼团15元起，拥有三项自主专利，温和去污不伤漆，超柔洁净不留痕',
+        desc: '上门洗车3人拼团10元起，拥有三项自主专利，温和去污不伤漆，超柔洁净不留痕',
         link: 'https://m.huijiacar.com/vue-mobile/#/pintuan-ha/product' + (actEntityId ? ('?actEntityId=' + actEntityId) : ''),
         imgUrl: 'https://m.huijiacar.com/vue-mobile/static/pintuan/share-logo.png',
         success: function () {

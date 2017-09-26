@@ -39,6 +39,9 @@ export default {
 @import '~vux/src/styles/reset.less';
 @import '~vux/src/styles/1px.less';
 
+body {
+  -webkit-overflow-scrolling: touch; /* ios5+ */
+}
 .toast-text {
   padding: 0 1em;
 }
